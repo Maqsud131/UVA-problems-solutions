@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int dt[100][100];
+int col[100];
+
+void floydWarshall(){
+    int i, j, k;
+    for (k = 0; k < 100; k++){
+        for (i = 0; i < 100; i++){
+            for (j = 0; j < 100; j++){
+                if (dt[i][k] + dt[k][j] < dt[i][j])dt[i][j] = dt[i][k] + dt[k][j];
+            }
+        }
+    }
+}
+
+int main() {
+	int u,v,c,s,n;
+	double r;
+	c=1;
+	while(scanf("%d %d",&u,&v)==2){
+		if(u==0)break;
+		n=s=0;
+		for (int k = 0; k < 100; k++){
+			col[k]=0;
+        	for (int i = 0; i < 100; i++)dt[k][i]=99999;
+		}
+		while(u!=0){
+			if(col[u-1]==0){
+				col[u-1]=1;
+				n++;
+			}
+			if(col[v-1]==0){
+				col[v-1]=1;
+				n++;
+			}
+			dt[u-1][v-1]=1;
+			scanf("%d %d",&u,&v);
+		}
+		
+		for(int i=0;i<100;i++)dt[i][i]=0;	
+		floydWarshall();
+		for(int i=0;i<100;i++){
+			for(int j=0;j<100;j++)if(dt[i][j]<99999)s=s+dt[i][j];
+		}
+		r=s/(n*(n-1.00));
+		printf("Case %d: average length between pages = %.3lf clicks\n",c,r);
+		c++;
+	}
+	return 0;
+}

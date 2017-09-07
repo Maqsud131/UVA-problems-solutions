@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,c;
+	char ch1,ch2;
+	char ar[205];
+	scanf("%d",&t);
+	for(int i=1;i<=t;i++){
+		printf("Case %d: ",i);
+		scanf("%s",ar);
+		ch1=ar[0];
+		for(int j=0;j<strlen(ar)+1;j++){
+			if(((int)ar[j]>64 && (int)ar[j]<91) || j==strlen(ar)){
+				ch2=ar[j];
+				for(int k=0;k<c;k++)printf("%c",ch1);
+				ch1=ch2;
+				c=0;
+			}else{
+				c=c*10+(int)ar[j]-48;
+			}
+		}
+		printf("\n");
+	} 
+	return 0;
+}

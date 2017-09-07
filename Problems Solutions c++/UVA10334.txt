@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,p,r,s;
+	int ar[1002][221];
+	for(int i=0;i<1002;i++){
+		for(int j=0;j<=221;j++)ar[i][j]=0;
+	}
+	 ar[0][220]=1;
+	 ar[1][220]=2;
+	for(int i=2;i<=1001;i++){
+		int c=0;
+		for(int j=220;j>=0;j--){
+			r=ar[i-1][j]+ar[i-2][j]+c;
+			if(r>9){c=1;
+				ar[i][j]=r%10;
+			}else{ c=0;
+				ar[i][j]=r;
+			}
+		}
+	}
+	while(scanf("%d",&n)==1){
+			for(int j=0;j<221;j++){
+				if(ar[n][j]!=0){
+					s=j;
+					break;
+				}
+			}
+			for(int j=s;j<221;j++)printf("%d",ar[n][j]);
+			printf("\n");
+	}
+	return 0;
+}

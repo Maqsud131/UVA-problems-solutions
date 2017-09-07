@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+double zero = 1e-9;
+
+int main() {
+	double x,y,c,w,a,l,u,mid,ans;
+	while(scanf("%lf %lf %lf",&x,&y,&c)==3){
+		if(y>x)u=x;
+		else u=y;
+		l=0;
+		
+		while(u-l>zero){
+			mid=(u+l)/2;
+			ans= 1- c/sqrt(x*x-mid*mid) - c/sqrt(y*y-mid*mid);
+			if(ans>0)l=mid;
+			else u=mid;
+		}
+		printf("%.3lf\n",mid);
+	}
+	return 0;
+}

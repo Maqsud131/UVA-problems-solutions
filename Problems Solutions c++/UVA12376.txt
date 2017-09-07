@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int e,n,u,v,t,mw,mn,no;
+	scanf("%d",&t);
+	for(int p=1;p<=t;p++){
+		scanf("%d %d",&n,&e);
+		int graph[n][n];
+		int col[n];
+		int w[n];
+		int qw[n];
+		for(int c=0;c<n;c++){ scanf("%d",&w[c]);
+			qw[c]=w[c];
+		}
+		for(int c=0;c<n;c++){
+			//col[c]=0;
+			for(int d=0;d<n;d++)graph[c][d]=0;
+		}
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			graph[u][v]=1;
+		}
+		//col[0]=1;
+		queue<int> q;
+		q.push(0);
+		mw=mn=0;
+		while(q.empty()==false){
+			u=q.front();
+			q.pop();
+			bool k=true;
+			int m=0;
+			for(int i=0;i<n;i++){
+				if(graph[u][i]==1){
+					k=false;
+					if(m<w[i]){
+						m=w[i];
+						no=i;
+					}
+				}
+			}
+			if(k==false)q.push(no);
+			qw[no]=qw[u]+m;
+			mw=qw[no];
+			mn=no;
+		}
+		printf("Case %d: %d %d\n",p,mw,mn);
+	}
+	return 0;
+}

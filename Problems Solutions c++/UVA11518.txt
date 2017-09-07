@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,u,v,n,l,m,c;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d %d %d",&n,&m,&l);
+		vector<int> gr[n+1];
+		int co[n+1];
+		for(int i=0;i<=n;i++)co[i]=0;
+		for(int i=0;i<m;i++){
+			scanf("%d %d",&u,&v);
+			gr[u].push_back(v);
+		}
+		c=0;
+		for(int i=0;i<l;i++){
+			scanf("%d",&u);
+			if(co[u]==0){
+				queue<int> q;
+				q.push(u);
+				co[u]=1;
+				while(!q.empty()){
+					c++;
+					u=q.front();
+					q.pop();
+					for(int j=0;j<gr[u].size();j++){
+						if(co[gr[u][j]]==0){co[gr[u][j]]=1;
+							q.push(gr[u][j]);
+						}
+					}
+				}
+			}
+		}
+		printf("%d\n",c);
+		t--;
+	}
+	return 0;
+}

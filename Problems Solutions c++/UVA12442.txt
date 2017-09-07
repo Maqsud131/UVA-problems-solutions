@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int step;
+int co;
+int mc;
+int mn;
+void clear( stack<int> &q )
+{
+   stack<int> empty;
+   swap( q, empty );
+}
+
+void dfs(int u,int *gr, int *col,int *p,int *st){
+	//printf("%d %d\n",u,gr[u]);
+    p[u]=step++;
+    col[u]=1;
+	if(gr[u]==-1){ st[u]=0;
+	}else if(col[gr[u]]==1){
+        st[u]=p[u]-p[gr[u]];
+        co=st[u]+1;
+        //printf("%d %d\n",u,st[u]);
+	}else if(col[gr[u]]==2){
+	    st[u]=st[gr[u]]+1;
+	}else{
+        dfs(gr[u],gr,col,p,st);
+        if(co>0){
+            co--;
+            st[u]=st[gr[u]];
+        }else{
+            st[u]=st[gr[u]]+1;
+        }
+	}
+	if(st[u]>mc){
+            mc=st[u];
+            mn=u;
+            //printf("%d %d\n",mn,mc);
+        }else if(st[u]==mc && mn>u){
+            mn=u;
+        }
+	col[u]=2;
+}
+
+
+int main() {
+    int t,n,u,v;
+    scanf("%d",&t);
+    for(int z=1;z<=t;z++){
+        scanf("%d",&n);
+        int gr[n+1];
+        int col[n+1];
+        int p[n+1];
+        int st[n+1];
+        for(int i=0;i<=n;i++){
+            gr[i]=-1;
+            col[i]=0;
+            p[i]=0;
+        }
+        for(int i=0;i<n;i++){
+            scanf("%d %d",&u,&v);
+            gr[u]=v;
+        }
+        mn=999999;
+        mc=0;
+        for(int i=1;i<=n;i++){
+            step=1;
+            co=0;
+            if(col[i]==0) dfs(i,gr,col,p,st);
+           // printf("%d %d\n",i,st[i]);
+        }
+        printf("Case %d: %d\n",z,mn);
+    }
+	return 0;
+}

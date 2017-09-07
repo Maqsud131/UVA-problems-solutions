@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	long long n,r,s,re;
+	double nu,de;
+	while(scanf("%lld %lld",&n,&r)==2){
+		s=n-r;
+		de=nu=0;
+		if(r>s){
+			for(int i=n;i>r;i--){
+				nu=nu+log10(i);
+			}
+			for(int i=s;i>0;i--){
+				de=de+log10(i);
+			}
+		}else{
+			for(int i=n;i>s;i--){
+				nu=nu+log10(i);
+				//printf("%lf %d\n",log(i),i);
+			}
+			for(int i=r;i>0;i--){
+				de=de+log10(i);
+			}	
+		}
+		//printf("%lf %lf\n",nu,de);
+		re=floor(nu-de)+1;
+		printf("%lld\n",re);
+	}
+	return 0;
+}

@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,x,m,mz,c;
+	scanf("%d",&n);
+	char ar[10000];
+	string s;
+	int lt[26];
+	m=mz=0;
+	cin.ignore();
+	for(int i=0;i<26;i++)lt[i]=0;
+	for(int i=0;i<n;i++){
+		getline (cin,s);
+		for(int j=0;j<s.size();j++){
+			if(s.at(j)>='A' && s.at(j)<='Z'){
+				x=s.at(j)-'A';
+				lt[x]++;
+				if(m<lt[x])m=lt[x];
+			}else if(s.at(j)>='a' && s.at(j)<='z'){
+				x=s.at(j)-'a';
+				lt[x]++;
+				if(m<lt[x])m=lt[x];
+			}
+		}	
+	}
+	c=0;
+	//printf("%d\n",lt[1]);
+	while(true){
+		if(lt[c]==m)printf("%c %d\n",c+'A',m);
+		if(lt[c]<m && lt[c]>mz)mz=lt[c];
+		c++;
+		if(c==25){
+			if(lt[c]==m)printf("%c %d\n",c+'A',m);
+		if(lt[c]<m && lt[c]>mz)mz=lt[c];
+			m=mz;
+			mz=0;
+			c=0;
+			if(m==0)break;
+		}
+	}
+	
+	return 0;
+}

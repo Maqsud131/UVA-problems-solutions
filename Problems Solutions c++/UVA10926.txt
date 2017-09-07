@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+int n,u,v,mn,md,e;
+
+
+
+int main() {
+	while(scanf("%d",&n)==1){
+		if(n==0)break;
+		vector<int> gr[n+1];
+		vector<int> col;
+		vector<int> id;
+		id.assign(n+1,0);
+		for(int i=1;i<=n;i++){
+			scanf("%d",&e);
+			for(int j=0;j<e;j++){
+				scanf("%d",&v);
+				gr[i].push_back(v);
+				id[v]=1;
+			}
+		}
+		md=0;mn=1;
+		for(int i=1;i<=n;i++){
+			int tm=0;
+			if(id[i]==0){
+				queue<int> q;
+				q.push(i);
+				col.assign(n+1,0);
+				col[i]=1;
+				while(!q.empty()){
+					u=q.front();
+					q.pop();
+					tm++;
+					for(int j=0;j<gr[u].size();j++){
+						if(col[gr[u][j]]==0){
+							col[gr[u][j]]=1;
+							q.push(gr[u][j]);
+						}
+					}
+				}
+				if(tm>md)md=tm,mn=i;
+				else if(tm==md && mn>i)mn=i;
+			}
+		}
+		
+		printf("%d\n",mn);
+		
+	}
+	
+	
+	return 0;
+}

@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef unsigned long long ll;
+
+int m,n;
+
+ll base[2][2]={{1,1},{1,0}};
+ll unit[2][2]={{1,0},{0,1}};
+
+
+void mul(ll a[2][2], ll b[2][2]){
+	int i,j,k;
+	ll r[2][2];
+	for(i=0;i<2;i++){
+		for(j=0;j<2;j++){
+			r[i][j]=0;
+			for(k=0;k<2;k++){
+				r[i][j]+=a[i][k]*b[k][j];
+			}
+		}
+	}
+	memcpy(a,r,sizeof(r));
+}
+
+void expM(ll r[2][2],int p){
+	p=n;
+	ll b[2][2];
+	memcpy(r,unit,sizeof(unit));
+	memcpy(b,base,sizeof(base));
+	
+	while(p>0){
+		if(p&1) mul(r,b);
+		p>>=1;
+		mul(b,b);
+	}
+	
+}
+
+
+
+int main() {
+	while(scanf("%d %d",&n,&m)==2){
+		
+		ll mat[2][2]={{0,0},{0,0}};
+		
+		expM(mat,n-1);
+		ll ans= mat[0][1]*1;
+		ans=ans%(1<<m);
+		printf("%lld\n",ans);
+		
+		
+	}
+	
+	return 0;
+}

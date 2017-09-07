@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n,x,y;
+    while(scanf("%d",&n)==1){
+        if(n==0)break;
+        queue<int> q;
+        queue<int> p;
+        for(int i=1;i<=n;i++)q.push(i);
+        while(q.size()>1){
+            x=q.front();
+            q.pop();
+            p.push(x);
+            y=q.front();
+            q.pop();
+            q.push(y);
+        } 
+        if(n>1)printf("Discarded cards: %d",p.front());
+        else printf("Discarded cards:");
+        if(p.size()>0)p.pop(); 
+        while(p.size()>0){
+            printf(", %d",p.front());
+            p.pop();
+        } 
+       printf("\n");
+       printf("Remaining card: %d\n",q.front());
+    } 
+
+return 0;
+}

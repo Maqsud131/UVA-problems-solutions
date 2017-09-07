@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define INF 999999999;
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+
+
+int main() {
+	int ca,n,e,w,s,t,u,v,co;
+	scanf("%d",&ca);
+	for(int z=1;z<=ca;z++){
+		scanf("%d %d %d %d",&n,&s,&t,&e);
+		vector<int> gr[n+1];
+		vector<int> we[n+1];
+		int dt[n+1];
+		for(int i=0;i<e;i++){scanf("%d %d %d",&u,&v,&w);
+			gr[v].push_back(u);
+			we[v].push_back(w);
+		}
+		for(int i=0;i<=n;i++)dt[i]=INF;
+	
+		dt[s]=0;
+		priority_queue<pair<int,ii>> pq;
+		for(int i=0;i<gr[s].size();i++){
+			pq.push(make_pair(-we[s][i],ii(s,gr[s][i])));
+		}
+		while(!pq.empty()){
+			pair<int,ii> ed=pq.top();
+			pq.pop();
+			v=ed.second.second;
+			u=ed.second.first;
+			//printf("%d %d\n",u,v);
+			if(dt[v]>-ed.first){
+				dt[v]=-ed.first;
+				for(int i=0;i<gr[v].size();i++)
+					if(gr[v][i]!=u)pq.push(make_pair(-dt[v]-we[v][i],ii(v,gr[v][i])));
+			}
+		}
+		co=0;
+		for(int i=1;i<=n;i++){
+			//printf("%d\n",dt[i]);
+			if(dt[i]<=t)co++;
+		}
+		printf("%d\n",co);
+		if(z<ca)printf("\n");
+	}
+	return 0;
+}

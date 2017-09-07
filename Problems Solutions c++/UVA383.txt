@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,w,e,r,x,y,c,u,v,k;
+	map<string,int> warh; 
+	string U,V;
+	cin>>t;
+	printf("SHIPPING ROUTES OUTPUT\n");
+	k=1;
+	printf("\n");
+	while(k<=t){
+		cin>>w >>e >>r;
+		printf("DATA SET  %d\n",k);
+		printf("\n");
+		for(int i=0;i<w;i++){
+			cin>>U;
+			warh[U]=i;
+		}
+		
+		int graph[w][w];
+		int col[w];
+		for(int i=0;i<w;i++){
+			for(int j=0;j<w;j++)graph[i][j]=0;
+			col[i]=0;
+		}
+		
+		for(int i=0;i<e;i++){
+			cin>>U>>V;
+			x=warh[U];
+			y=warh[V];
+			graph[x][y]=1;
+			graph[y][x]=1;
+		}
+		
+		for(int i=0;i<r;i++){
+			cin>>c>>U>>V;
+			for(int j=0;j<w;j++)col[j]=0;
+			bool tr=false;
+			u=warh[U];
+			v=warh[V];
+			if(graph[u][v]==1)printf("$%d\n",c*100);
+			else{queue<int> q;
+				q.push(u);
+				while(q.empty()==false){
+					x=q.front();
+					q.pop();
+					for(int j=0;j<w;j++){
+						if(graph[x][j]==1){
+							if(col[j]==0){
+								q.push(j);
+								col[j]=col[x]+1;
+							}
+							if(j==v){
+								printf("$%d\n",(col[j])*c*100);
+								while(q.empty()!=true)q.pop();
+								tr=true;
+								break;
+							}
+						}
+					}
+				}
+				if(tr==false)printf("NO SHIPMENT POSSIBLE\n");
+		}
+		}
+		k++;
+		printf("\n");
+	}
+	printf("END OF OUTPUT\n");
+	return 0;
+}

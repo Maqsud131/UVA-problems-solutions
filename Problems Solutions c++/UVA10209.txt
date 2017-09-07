@@ -1,0 +1,22 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+int main() {
+	double sq,r,l,len,dom,pri,cor,p,qu,hat,cen;
+	p=2*acos(0.0);
+	while(scanf("%lf",&r)==1){
+		qu=r*r*p/4;
+		sq=r*r;
+		cor=sq-qu;
+		len=sq-2*cor;
+		l=r*sqrt(3)/2;
+		dom=(r*r*p)/3 - l*r/2;
+		pri=dom-len;
+		hat=cor-2*pri;
+		cen=dom-(pri+2*hat);
+		printf("%.3lf %.3lf %.3lf\n",cen,4*hat,4*pri);
+	}
+	return 0;
+}

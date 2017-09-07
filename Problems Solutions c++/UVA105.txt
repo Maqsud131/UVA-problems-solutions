@@ -1,0 +1,35 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() {
+	int l,r,h,e,s;
+	int ar[10010];
+	bool t;
+	for(int i=0;i<10010;i++)ar[i]=0;
+	e=0;
+	s=0;
+	while(scanf("%d %d %d",&l,&h,&r)==3){
+	    for(int i=l;i<r;i++)if(h>ar[i])ar[i]=h;
+		if(e<r)e=r;
+		if(l==1)s=1;
+	}
+	//printf("%d\n",ar[22]);
+//	printf("1 %d",ar[0]);
+	h=ar[0];
+	t=false;
+	if(s==0){printf("1 0");
+		t=true;
+	}
+	for(int i=0;i<e;i++){
+		if(h!=ar[i]){
+			h=ar[i];
+			if(t==true){printf(" %d %d",i,h);
+			}else{t=true;
+				printf("%d %d",i,h);
+			}
+		}
+	}
+	printf(" %d 0\n",e);
+	return 0;
+}

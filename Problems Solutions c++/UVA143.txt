@@ -1,0 +1,61 @@
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <cmath>
+#define EPS 1e-9
+using namespace std;
+
+int main() {
+	int c,xl,xh,yl,yh,x,y;
+	double a,a1,a2,a3,x1,y1,x2,y2,x3,y3,d1,d2,d,hx,hy,lx,ly;
+	while(scanf("%lf %lf %lf %lf %lf %lf",&x1,&y1,&x2,&y2,&x3,&y3)==6){
+		yl=xl=1;
+		xh=yh=99;
+		hx=lx=x1;
+		hy=ly=y1;
+		//printf("%lf %lf",x2 , hx);
+		if(x2>hx)hx=x2;
+		if(y2>hy)hy=y2;
+		if(x3>hx)hx=x3;
+		if(y3>hy)hy=y3;
+		if(x2<lx)lx=x2;
+		if(y2<ly)ly=y2;
+		if(x3<lx)lx=x3;
+		if(y3<ly)ly=y3;
+		if(ly>1)yl=ceil(ly);
+		if(lx>1)xl=ceil(lx);
+		if(hx<99)xh=floor(hx);
+		if(hy<99)yh=floor(hy);
+		//printf("%d %d %d %d\n",hx,hy,lx,ly);
+		c=0;
+		if(x1==0 && y1==0 && x2==0 && y2==0 && x3==0 && y3==0)break;
+		a=abs((x1*y2-x1*y3+x2*y3-x2*y1+x3*y1-x3*y2)/2);
+		d=(hx-lx)*(hx-lx)+(hy-ly)*(hy-ly);
+		if(x1==x2 && x2==x3 && y1==y2 && y2==y3 && x1<=99 && y1<=99 && x1>=1 && y1>=1){
+			x=(int)x1;
+			y=(int)y1;
+			if(x!=x1 || y!=y1)c=0;
+			else c=1;	
+		}else{
+		for(int i=xl;i<=xh;i++){
+			for(int j=yl;j<=yh;j++){
+				a1=abs((i*y2-i*y3+x2*y3-x2*j+x3*j-x3*y2)/2);
+				a2=abs((x1*j-x1*y3+i*y3-i*y1+x3*y1-x3*j)/2);
+				a3=abs((x1*y2-x1*j+x2*j-x2*y1+i*y1-i*y2)/2);
+				
+				if(a>0){
+					
+					if(fabs(a1+a2+a3-a)<=EPS)c++;
+				}else{
+				//	if(i==j)printf("%lf %lf %lf\n",a1,a2,a3);
+					if(a1<EPS && a2<EPS && a3<EPS)c++;
+					//	printf("%d %d\n",i,j);}
+				}
+				//printf("%lf %lf\n",a1+a2+a3,a);
+			}
+		}
+		}
+		printf("%4d\n",c);
+	}
+	return 0;
+}

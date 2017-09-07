@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,x;
+	scanf("%d",&t);
+	
+	while(t>0){
+		scanf("%d",&n);
+		int* ar1= new int[1000000];
+		int* ar2=new int[1000000];
+		int* no=new int[1000001];
+		memset(no, 0, sizeof(no));
+		for(int i=0;i<n;i++){
+			ar1[i]=0;
+			ar2[i]=0;
+		}
+		for(int i=n-1;i>=0;i--)scanf("%d %d",&ar1[i],&ar2[i]);
+		for(int i=0;i<n;i++){
+			x=ar2[i]+ar1[i];
+			if(x>9){
+				ar1[i+1]++;
+				no[n-i]=x-10;
+			}else{
+				no[n-i]=x;
+			}
+		}
+		if(x>9)printf("1");
+		for(int i=1;i<n+1;i++)printf("%d",no[i]);
+		printf("\n");
+		if(t!=1)printf("\n");
+		t--;
+		delete[] ar1;
+		delete[] ar2;
+		delete[] no;
+	}
+	return 0;
+}

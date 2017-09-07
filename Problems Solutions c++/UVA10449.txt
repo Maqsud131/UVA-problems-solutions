@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,e,u,v,q,s;
+	s=1;
+	while(scanf("%d",&n)==1){
+		int we[n+1];
+		int dt[n+1];
+		int pa[n+1];
+		int col[n+1];
+		for(int i=0;i<=n;i++)dt[i]=col[i]=pa[i]=2147483646;
+		for(int i=1;i<=n;i++)scanf("%d",&we[i]);
+		scanf("%d",&e);
+		vector<int> gr[n+1];
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			gr[u].push_back(v);
+		}
+		scanf("%d",&q);
+		dt[1]=0;
+		pa[1]=1;
+		for(int i=0; i<n-1; i++){
+			for(int k=1;k<=n;k++){
+				for(int j=0;j<gr[k].size();j++){
+					int x=we[gr[k][j]]-we[k];
+					x=x*x*x;
+					if(dt[gr[k][j]]> dt[k] + x){
+						dt[gr[k][j]] = dt[k] + x;
+						pa[gr[k][j]]=pa[k];
+					}
+				}
+			}
+		}
+		
+		for(int i=0; i<n-1; i++){
+			for(int k=1;k<=n;k++){
+				for(int j=0;j<gr[k].size();j++){
+					int x=we[gr[k][j]]-we[k];
+					x=x*x*x;
+					if(dt[gr[k][j]]>dt[k] + x){
+						col[k]=col[gr[k][j]]=1;
+						dt[gr[k][j]] = dt[k] + x;
+					}
+				}
+			}
+		}
+		printf("Set #%d\n",s);
+		for(int i=0;i<q;i++){
+			scanf("%d",&u);
+			if(dt[u]>2 && pa[u]==1 && col[u]!=1)printf("%d\n",dt[u]);
+			else printf("?\n");
+		}
+		s++;
+	}
+	return 0;
+}

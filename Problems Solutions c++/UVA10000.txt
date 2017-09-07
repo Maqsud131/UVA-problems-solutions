@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+
+int main() {
+	int n,s,u,v,mn,md,c;
+	c=1;
+	while(scanf("%d",&n)==1){
+		if(n==0)break;
+		scanf("%d",&s);
+		vector<int> gr[n+1];
+		while(scanf("%d %d",&u,&v)==2){
+			if(u==0)break;
+			gr[u].push_back(v);
+		}
+		vi col;
+		col.assign(n+1,-1);
+		
+		md=0;
+		mn=s;
+		queue<int> q;
+		col[s]=0;
+		q.push(s);
+		while(!q.empty()){
+			u=q.front();
+			q.pop();
+			if(md<col[u]){md=col[u],mn=u;
+			}else if(md==col[u] && mn>u){mn=u;
+			}
+			for(int i=0;i<gr[u].size();i++){
+				if(col[gr[u][i]]==-1 || col[gr[u][i]]<col[u]+1){
+					col[gr[u][i]]=col[u]+1;
+					q.push(gr[u][i]);
+				}
+			}
+		}
+		
+		printf("Case %d: The longest path from %d has length %d, finishing at %d.\n",c,s,md,mn);
+		c++;
+		printf("\n");
+	}
+	
+	return 0;
+}

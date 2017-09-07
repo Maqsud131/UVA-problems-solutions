@@ -1,0 +1,25 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+int main() {
+//	int n;
+	double a,n,x,y,d1,d2,d3,d4,r,m,ar;
+	while(scanf("%lf %lf",&n,&a)==2){
+		if(n==0)break;
+		r=a*a;
+		m=0;
+		for(int i=0;i<n;i++){
+			scanf("%lf %lf",&x,&y);
+			d1=x*x + y*y;
+			d2=(x-a)*(x-a) + y*y;
+			d3=x*x + (y-a)*(y-a) ;
+			d4=(x-a)*(x-a) + (y-a)*(y-a);
+			if(d4<r && d3<r && d2<r && d1<r)m++;
+		}
+		ar=m*a*a/n;
+		printf("%.5lf\n",ar);
+	}
+	return 0;
+}

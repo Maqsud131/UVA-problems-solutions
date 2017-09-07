@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,e,u,v,a,b,c;
+
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d",&n);
+		int g[201][201];
+		vector<int> gr[201];
+
+		for(int i=1;i<=n;i++){
+			for(int j=1;j<=n;j++)g[i][j]=0;
+		}
+
+		for(int i=1;i<=n;i++){
+           
+			scanf("%d",&e);
+			for(int j=0;j<e;j++){
+
+				scanf("%d",&v);
+				if(g[i][v]==0){gr[i].push_back(v);
+					gr[v].push_back(i);
+					g[i][v]=g[v][i]=1;
+				}
+			}
+		}
+
+		int col[201];
+		for(int i=0;i<201;i++)col[i]=0;
+		
+		c=0;
+
+		for(int i=1;i<=n;i++){
+			queue<int> q;
+			bool tr=true;
+			if(col[i]==0){q.push(i);
+				col[i]=1;
+				a=1;
+				b=0;
+				while(!q.empty()){
+					u=q.front();
+					q.pop();
+					for(int j=0;j<gr[u].size();j++){
+						if(col[gr[u][j]]==0){
+							q.push(gr[u][j]);
+							if(col[u]==1){col[gr[u][j]]=2;
+								if(gr[u][j]<=n)b++;
+							}else{col[gr[u][j]]=1;
+								if(gr[u][j]<=n)a++;
+							}
+						}
+						if(col[gr[u][j]]==col[u] && gr[u][j]<=n && u<=n)tr=false;
+						
+					}
+				}
+				if(tr==true){
+					if(a>b)c=c+a;
+					else c=c+b;
+				}
+			}
+		}
+		//for(int i=0;i<n;i++)printf("%d\n",col[i]);
+		printf("%d\n",c);
+
+		t--;
+	}
+	return 0;
+}

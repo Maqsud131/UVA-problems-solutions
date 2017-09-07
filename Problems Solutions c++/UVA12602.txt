@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,x,c,r;
+	char ar[9];
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%s",ar);
+		c=((int)ar[0]-65)*676;
+		c=c+((int)ar[1]-65)*26;
+		c=c+(int)ar[2]-65;
+		
+		x=((int)ar[4]-48)*1000;
+		x=x+((int)ar[5]-48)*100;
+		x=x+((int)ar[6]-48)*10;
+		x=x+((int)ar[7]-48);
+		r=abs(x-c);
+		if(r>100)printf("not nice\n");
+		else printf("nice\n");
+		t--;
+	}
+	return 0;
+}

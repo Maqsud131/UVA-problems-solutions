@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+long long gcd(long long a, long long b) {
+  if (b == 0) return a;
+  return gcd(b, a%b);
+}
+
+
+int main() {
+	int n,s,nx,c;
+	long long steps;
+	while(scanf("%d",&n)==1){
+		if(n==0)break;
+		int ar[n+1];
+		int st[n+1];
+		int no[100001];
+		for(int i=1;i<=n;i++)scanf("%d",&ar[i]);
+		memset(no, 0 ,sizeof(no));
+		c=0;
+		for(int i=1;i<=n;i++){
+			s=1;
+			nx=ar[i];
+			while(nx!=i){
+				//printf("%d %d\n",i,nx);
+				nx=ar[nx];
+				s++;
+			}
+		//	printf("\n");
+			st[i]=s;
+		//	printf("%d %d\n",i,st[i]);
+			if(no[s]==0)c++;
+			no[s]=1;
+		}
+		long long li[c];
+		c=0;
+		for(int i=1;i<=100000;i++){
+			if(no[i]==1){
+				li[c]=i;
+				c++;
+			}
+		}
+	//	for(int i=0;i<c;i++)printf("%d\n",li[i]);
+		if(c>1){steps=li[0]*li[1]/gcd(li[0],li[1]);
+		//	printf("%lld\n",steps);
+			for(int i=2;i<c;i++)steps=steps*li[i]/gcd(steps,li[i]);
+		}else{
+			steps=li[0];
+		}
+		printf("%lld\n",steps);
+	}
+	return 0;
+}

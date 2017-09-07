@@ -1,0 +1,158 @@
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <queue>
+#include <vector>
+#include <math.h>
+#define Size 102
+
+using namespace std;
+
+int clr[Size][Size];
+char gr[Size][Size];
+int lv[Size][Size];
+int co;
+int m,n;
+
+int bfs(int r,int c){
+	clr[r][c]=1;	
+	lv[r][c]=1;
+	co=1;
+	int l=1;
+	char ch=gr[r][c];
+	queue<int> qr;
+	qr.push(r);
+	qr.push(c);
+	while(qr.size()>0){
+		r=qr.front();
+		qr.pop();
+		c=qr.front();
+		qr.pop();
+		if(r-1==0 || c-1==0 || r==m || c==n)break;
+		if(clr[r-1][c-1]!=1){
+			if(gr[r-1][c-1]==ch){
+				qr.push(r-1);
+				qr.push(c-1);
+				clr[r-1][c-1]=1;
+				l=lv[r-1][c-1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r-1][c]!=1){
+			if(gr[r-1][c]==ch){
+				qr.push(r-1);
+				qr.push(c);
+				clr[r-1][c]=1;
+				l=lv[r-1][c]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r-1][c+1]!=1){
+			if(gr[r-1][c+1]==ch){
+				qr.push(r-1);
+				qr.push(c+1);
+				clr[r-1][c+1]=1;
+				l=lv[r-1][c+1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r][c-1]!=1){
+			if(gr[r][c-1]==ch){
+				qr.push(r);
+				qr.push(c-1);
+				clr[r][c-1]=1;
+				l=lv[r][c-1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r][c+1]!=1){
+			if(gr[r][c+1]==ch){
+				qr.push(r);
+				qr.push(c+1);
+				clr[r][c+1]=1;
+				l=lv[r][c+1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r+1][c-1]!=1){
+			if(gr[r+1][c-1]==ch){
+				qr.push(r+1);
+				qr.push(c-1);
+				clr[r+1][c-1]=1;
+				l=lv[r+1][c-1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r+1][c]!=1){
+			if(gr[r+1][c]==ch){
+				qr.push(r+1);
+				qr.push(c);
+				clr[r+1][c]=1;
+				l=lv[r+1][c]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+		if(clr[r+1][c+1]!=1){
+			if(gr[r+1][c+1]==ch){
+				qr.push(r+1);
+				qr.push(c+1);
+				clr[r+1][c+1]=1;
+				l=lv[r+1][c+1]=lv[r][c]+1;
+				co++;
+			}else{break;}
+		}
+	}
+	return l;
+}
+
+int main() {
+	int t,q,r,c;
+	char ch;
+	//vector<string> graph;
+	char fg[102];
+	scanf("%d",&t);
+	while(t>0){
+		vector<string> graph;
+		scanf("%d %d %d",&m,&n,&q);
+		for(int i=0;i<=m+1;i++){
+			clr[i][0]=1;
+			clr[i][m+1]=1;
+		}
+		for(int i=0;i<=n+1;i++){
+			clr[0][i]=1;
+			clr[n+1][i]=1;
+		}
+		for(int i = 0; i<m; i++){
+   			scanf("%s", fg); graph.push_back(fg); 
+		}
+
+		for(int i=1;i<=m;i++){
+			for(int j=1;j<=n;j++){
+				gr[i][j]=graph[i-1][j-1];
+			}
+		}
+		printf("%d %d %d\n",m,n,q);
+		for(int cs=0;cs<q;cs++){
+			for(int i=1;i<=m;i++){
+				for(int j=1;j<=n;j++){
+					clr[i][j]=lv[i][j]=0;
+				}
+			}
+			
+			scanf("%d %d",&r,&c);
+			int x=bfs(r+1,c+1);
+			int p=sqrt(co);
+			if(p%2==0)p--;
+			printf("%d\n",p);
+			//int ds=1+(x-1)*2;
+			//int sq=ds*ds;
+			//if(sq<co)
+			//	ds--;
+			//printf("%d\n",co);
+			
+		}
+		t--;
+	}
+	
+	return 0;
+}

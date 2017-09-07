@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int n,v,j,c;
+    bool pr[120];
+    for(int i=0;i<120;i++)pr[i]=false;
+    for(int i=2;i<=11;i++){
+        if(pr[i]==false){
+        	for(int j=i*i;j<120;j=j+i)pr[j]=true;
+        }
+    }
+
+
+    while(true){
+        scanf("%d",&n);
+        if(n==0)break;
+        int ar[n+1];
+        c=0;
+        for(int i=0;i<=n;i++)ar[i]=0;
+        for(int i=n;i>1;i--){
+            j=2;
+            v=i;
+            while(v>1){
+             //   printf("%d %d\n",v,j);
+                if(v%j==0){v=v/j;
+                    ar[j]++;
+                }else{
+                    j++;
+                    while(pr[j]!=false)j++;
+                }
+            }
+           // printf("\n");
+        }
+		for(int i=2;i<=n;i++)if(pr[i]==false)c++;
+        printf("%3d! =",n);
+        int co=0;
+        for(int i=2;i<=n;i++){
+            if(pr[i]==false){
+            	if(i>2 && co==0) printf("%9d",ar[i]);
+            	else printf(" %2d",ar[i]);
+            	co++;
+            }
+            if(co==15 && c!=15){printf("\n");
+            	co=0;
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}

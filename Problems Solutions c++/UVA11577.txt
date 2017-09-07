@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	char line[210];
+	int t,c,m;
+	scanf("%d",&t);
+	int ar[27];
+	cin.getline(line, sizeof(line));
+	for(int k=0;k<t;k++){
+		for(int i=0;i<27;i++)ar[i]=0;
+		m=0;
+		cin.getline(line, sizeof(line));
+		for(int i=0;i<strlen(line);i++){
+			c=(int)line[i];
+			//printf("%d\n",c);
+			if(c<91 && c>64){
+				ar[c-64]=ar[c-64]+1;
+				if(ar[c-64]>m)m=ar[c-64];
+			}
+			if(c<123 && c>96){
+				ar[c-96]=ar[c-96]+1;
+				if(ar[c-96]>m)m=ar[c-96];
+			}
+		}
+		for(int i=1;i<27;i++)if(ar[i]==m)printf("%c",(char)(i+96));
+		printf("\n");
+	}
+	return 0;
+}

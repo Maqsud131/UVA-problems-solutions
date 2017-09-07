@@ -1,0 +1,103 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+vi p,r;  // p- parent , r- rank
+
+void unionFind(int n){  //clearing parent, rank assgning new values
+	r.assign(n,0);  
+	p.assign(n,0);
+	for(int i=0;i<n;i++)p[i]=i;
+}
+
+int findSet(int i){
+	if(p[i]==i)return i;
+	else return findSet(p[i]);
+}
+
+bool isSameSet(int i,int j){
+	return findSet(i)==findSet(j);
+}
+
+void unionSet(int i,int j){
+	if(!isSameSet(i,j)){
+		int x=findSet(i), y=findSet(j);
+		if(r[x]>r[y]){ p[y]=x;
+		}else{ 
+			p[x]=y;
+			if(r[x]==r[y])r[y]++;
+		}
+	}
+}
+
+int main() {
+	int t,n,e,u,v,w,ml,ml2,p,tem,s,d,q;
+	t=1;
+	while(scanf("%d %d %d",&n,&e,&q)==3){
+		if(n==0 && e==0)break;
+		if(t>1)printf("\n");
+		vector<int> gr[n];
+		vector<int> we[n];
+		vector<pair<int,ii> > ed;
+		int el[e];
+		for(int i=0;i<e;i++)el[i]=0;
+
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			ed.push_back(make_pair(w,ii(u-1,v-1)));
+			//printf("%d %d %d\n",ed[i].second.first,ed[i].second.second,ed[i].first);
+		}
+	
+		sort(ed.begin(), ed.begin()+e);
+		
+		 unionFind(n);
+		 
+		 for(int i=0;i<e;i++){
+		 	pair<int, ii> front=ed[i];
+		 	if(!isSameSet(front.second.first,front.second.second)){
+		 		el[i]=1;
+		 		gr[front.second.first].push_back(front.second.second);
+		 		gr[front.second.second].push_back(front.second.first);
+		 		we[front.second.first].push_back(front.first);
+		 		we[front.second.second].push_back(front.first);
+		 		//if(indg[front.second.first]>1 && indg[front.second.second]>1)p=i;
+				unionSet(front.second.first,front.second.second);
+			}
+		 }
+		printf("Case #%d\n",t);
+		for(int l=0;l<q;l++){
+			scanf("%d %d",&s,&d);	
+			s--;
+			d--;
+			int col[n];
+			 for(int i=0;i<n;i++)col[i]=0;
+			 queue<int> q;
+			 q.push(s);
+			 col[s]=0;
+			 while(!q.empty()){
+			 	u=q.front();
+			 	q.pop();
+			 	if(u==d)break;
+			 	for(int i=0;i<gr[u].size();i++){
+			 		if(col[gr[u][i]]==0 && gr[u][i]!=s){
+			 			q.push(gr[u][i]);
+			 			
+			 			if(col[u]<we[u][i]) col[gr[u][i]]=we[u][i];
+			 			else col[gr[u][i]]=col[u];
+			 			//printf("%d %d\n",gr[u][i] ,col[gr[u][i]]);
+			 		}	
+			 	}
+			 }
+			 
+			 
+			if(col[d]==0)printf("no path\n");
+			else printf("%d\n",col[d]);
+		}
+		
+		 t++;
+	}
+	return 0;
+}

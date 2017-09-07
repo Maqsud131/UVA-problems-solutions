@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    long long a,n,l,co,t;
+    t=1;
+    while(true){
+        scanf("%lld %lld",&n,&l);
+        if(n<0 && l<0)break;
+        co=0;
+        a=n;
+        while(n<=l){
+            co++;
+            if(n==1)break;
+            if(n%2==0) n=n/2;
+            else n=3*n+1;
+        }
+        printf("Case %lld: A = %lld, limit = %lld, number of terms = %lld\n",t,a,l,co);
+        t++;
+    }
+    return 0;
+}

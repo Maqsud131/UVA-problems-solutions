@@ -1,0 +1,12 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() {
+	double s;
+	while(scanf("%lf",&s)==1){
+		s=s*1.0673956817;// ASA theorem s*sin(108)/sin(63)
+		printf("%.10lf\n",s);
+	}
+	return 0;
+}

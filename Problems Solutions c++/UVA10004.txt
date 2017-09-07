@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int e,n,u,v;
+	
+	while(true){
+		scanf("%d",&n);
+		if(n==0)break;
+		scanf("%d",&e);
+		
+		int gr[n][n];
+		int col[n];
+		for(int i=0;i<n;i++){
+			col[i]=0;
+			for(int j=0;j<n;j++)gr[i][j]=0;
+		}
+		
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			gr[u][v]=1;
+			gr[v][u]=1;
+			
+		}
+		
+		bool tr= true;
+		queue<int> q;
+		q.push(0);
+		col[0]=1;
+	//	printf("%d %d",col[4],col[0]);
+		while(q.empty()==false){
+			u=q.front();
+			q.pop();
+			for(int i=0;i<n;i++){
+				if(gr[u][i]==1){
+					if(col[i]==col[u]){
+						tr=false;
+					//	printf("%d",i);
+						break;
+					}
+					if(col[i]==0){
+						q.push(i);
+						if(col[u]==1)col[i]=2;
+						else col[i]=1;
+					}
+					
+				}
+			}
+			if(tr==false)break;
+		}
+		if(tr==false)printf("NOT BICOLORABLE.\n");
+		else printf("BICOLORABLE.\n");
+	}
+	return 0;
+}

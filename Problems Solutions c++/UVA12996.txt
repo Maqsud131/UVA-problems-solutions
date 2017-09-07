@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,l,c;
+	scanf("%d",&t);
+	for(int a=1;a<=t;a++){
+		scanf("%d %d",&n,&l);
+		int ar[n];
+		int li[n];
+		for(int i=0;i<n;i++)scanf("%d",&ar[i]);
+		for(int i=0;i<n;i++)scanf("%d",&li[i]);
+		c=0;
+		bool tr=true;
+		for(int i=0;i<n;i++){
+			if(ar[i]>li[i]){
+				tr=false;
+				break;
+			}else{
+				c=c+ar[i];
+			}
+			if(c>l){
+				tr=false;
+				break;
+			}
+		}
+		if(tr==false)printf("Case %d: No\n",a);
+		else printf("Case %d: Yes\n",a);
+	}
+	return 0;
+}

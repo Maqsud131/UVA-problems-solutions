@@ -1,0 +1,37 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+long long dp[30010][5];
+int co[]={1,5,10,25,50};
+
+long long DP(int po,int amt){
+	if(amt==0) return 1;
+	else if(amt<0) return 0;
+	long long a=0;
+	if(dp[amt][po]>=0) return dp[amt][po];
+	else {
+		for(int j=po;j<5;j++)a=a+DP(j,amt-co[j]);
+		dp[amt][po]=a;
+	}
+	return a;
+}
+
+int main() {
+	int n;
+	long long a;
+
+	for(int i=0;i<30001;i++){
+		for(int j=0;j<5;j++){
+				dp[i][j]=-1;
+		}
+	}
+	
+	while(scanf("%d",&n)==1){
+		a=DP(0,n-1)+DP(1,n-5)+DP(2,n-10)+DP(3,n-25)+DP(4,n-50);
+		if(a>1)printf("There are %lld ways to produce %d cents change.\n",a,n);
+		else printf("There is only 1 way to produce %d cents change.\n",n);
+	}
+	return 0;
+}

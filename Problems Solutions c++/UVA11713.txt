@@ -1,0 +1,29 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+int main() {
+	int t,v;
+	char w1[25];
+	char w2[25];
+	scanf("%d",&t);
+	for(int i=0;i<t;i++){
+		scanf("%s",w1);
+		scanf("%s",w2);
+		v=0;
+		if(strlen(w1)==strlen(w2)){
+			for(int c=0;c<strlen(w1);c++){
+				if(w1[c]!=w2[c]){
+					if((w1[c]!='a' && w1[c]!='e' && w1[c]!='i' && w1[c]!='o' && w1[c]!='u') || (w2[c]!='a' && w2[c]!='e' && w2[c]!='i' && w2[c]!='o' && w2[c]!='u')){
+						printf("No\n");
+						v=1;
+						break;
+					}		
+				}
+			}
+			if(v==0)printf("Yes\n");
+		}else{
+			printf("No\n");
+		}
+	}
+	return 0;
+}

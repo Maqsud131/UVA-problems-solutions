@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void clear( queue<int> &q )
+{
+   queue<int> empty;
+   swap( q, empty );
+}
+
+int main() {
+	int u,v,st,e,x,t;
+	t=0;
+	queue<int> q;
+	int col[10000];
+	while(scanf("%d %d %d",&u,&v,&e)==3){
+		t++;
+		//printf("%d %d %d\n",u,v,e);
+		if(u==0 && v==0 && e==0)break;
+		int er[e];
+	//	printf("ghjgh");
+		for(int i=0;i<e;i++){
+			scanf("%d",&er[i]);
+		}
+		for(int j=0;j<10000;j++)col[j]=0;
+		clear(q);
+		//printf("%d\n",q.size());
+		q.push(u);
+		col[u]=1;
+		st=0;
+		//printf("ghjgh");
+		while(!q.empty()){
+			u=q.front();
+			//printf("%d\n",u);
+			q.pop();
+			if(u==v){
+				st=col[u];
+				break;
+			}
+			for(int w=0;w<e;w++){
+				x=(u+er[w])%10000;
+				if(col[x]==0){
+					col[x]=col[u]+1;
+					q.push(x);
+				}
+			}
+		}
+		if(st==0)printf("Case %d: Permanently Locked\n",t);
+		else printf("Case %d: %d\n",t,st-1);
+	}
+	return 0;
+}

@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,m;
+	string s;
+	cin>>t;
+	for(int i=1;i<=t;i++){
+		m=0;
+		string st[10];
+		int v[10];
+		for(int j=0;j<10;j++){
+			cin>>s>>v[j];
+			st[j]=s;
+			if(m<v[j])m=v[j];
+		}
+		printf("Case #%d:\n",i);
+		for(int j=0;j<10;j++){
+            if(v[j]==m)cout<<st[j]<<'\n';
+    	}
+    }
+	return 0;
+}

@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	double h,m,a1,a2,a;
+	char ar[6];
+	while(true){
+		scanf("%s",ar);
+		if(ar[1]==':'){
+			m=((int)ar[2]-'0')*10 + ((int)ar[3]-'0');
+			h=(int)ar[0]-'0';
+		}else{
+			m=((int)ar[3]-'0')*10 + ((int)ar[4]-'0');
+			h=((int)ar[0]-'0')*10 + ((int)ar[1]-'0');
+		}
+		if(h==0 && m==0)break;
+		h=h+m/60;
+		a1=30*h;
+		a2=6*m;
+		a=abs(a1-a2);
+		if(a>180)a=360-a;
+		printf("%.3lf\n",a);
+	}
+	return 0;
+}

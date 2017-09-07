@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,c,r,co,l,a,ma,x,b,rs,cs,re,ce;
+	char ch[30];
+	scanf("%d",&t);
+	while(t>0){
+        scanf("%d",&r);
+		int gr[r][r];
+		c=r;
+
+		for(int i=0;i<r;i++){
+			for(int h=0;h<c;h++)gr[i][h]=0;
+		}
+        scanf("%d",&b);
+        while(b>0){
+            scanf("%d %d %d %d",&rs,&cs,&re,&ce);
+            for(int y=rs-1;y<re;y++){
+                for(int z=cs-1;z<ce;z++)gr[y][z]=1;
+            }
+            b--;
+        }
+
+		ma=0;
+		for(int i=0;i<r;i++){
+			for(int j=0;j<c;j++){
+				if(gr[i][j]==0){
+					l=c-1;
+					for(int i2=i;i2<r;i2++){
+						bool t=false;
+						for(int j2=j;j2<c;j2++){
+
+						//	printf("%d %d %d %d l->%d \n",i,j,i2,j2,l);
+							if(j2>l){//a=(1+i2-i)*(1+j2-j);
+								//if(ma<a)ma=a;
+							//	printf("%d %d %d %d %d break\n",i,j,i2,j2,a);
+								break;
+							}
+							if(gr[i2][j2]==1){l=j2-1;
+								if(i==i2){a=j2-j;
+								}else if(j==j2){a=(i2-i);
+									t=true;
+								}else{ a=(1+i2-i)*(j2-j);
+								}
+								if(ma<a)ma=a;
+							//	printf("%d %d %d %d %d l-> %d break\n",i,j,i2,j2,a,l);
+								//printf("z %d\n",j2);
+
+								break;
+							}
+
+							if(j2==l){
+								a=(1+i2-i)*(1+j2-j);
+								if(ma<a)ma=a;
+							//	printf("%d %d %d %d %d breakjk %d\n",i,j,i2,j2,a,gr[i2][j2]);
+								break;
+							}
+						}
+						if(t==true)break;
+					}
+				//	printf("\n");
+				}
+			}
+		}
+		
+		printf("%d\n",ma);
+		t--;
+	}
+	return 0;
+}

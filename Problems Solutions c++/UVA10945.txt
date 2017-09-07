@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+#include <string>
+using namespace std;
+
+int main() {
+	string st;
+	int x1,x2;
+	while(true){
+		getline(cin, st);
+		if(st.size()==4 && st.compare("DONE")==0)break;
+		int i=0;
+		int j = st.size()-1;
+		bool t=true;
+		while(i<j){
+			//printf("%d %d\n",i,j);
+			if(((int)st.at(i)<65 || (int)st.at(i)>122) || ((int)st.at(i)>90 && (int)st.at(i)<97) || ((int)st.at(j)<65 || (int)st.at(j)>122) || ((int)st.at(j)>90 && (int)st.at(j)<97)){
+				if((int)(st.at(i)<65 || (int)st.at(i)>122) || ((int)st.at(i)>90 && (int)st.at(i)<97))i++;
+				if(((int)st.at(j)<65 || (int)st.at(j)>122) || ((int)st.at(j)>90 && (int)st.at(j)<97))j--;
+			}else{
+				if((int)st.at(i)<97)x1=(int)st.at(i)-65;
+				else x1=(int)st.at(i)-97;
+				
+				if((int)st.at(j)<97)x2=(int)st.at(j)-65;
+				else x2=(int)st.at(j)-97;
+				i++;
+				j--;
+				if(x1!=x2){
+					t=false;
+					break;
+				}
+			}
+		}
+		if(t==false)printf("Uh oh..\n");
+		else printf("You won't be eaten!\n");
+	}
+	return 0;
+}

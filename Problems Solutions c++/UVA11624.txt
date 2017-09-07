@@ -1,0 +1,126 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int INF = 1<<29;
+int main() {
+	int t,r,c,n,x,y,xs,ys,xe,ye,d;
+	char ar[1100];
+	scanf("%d",&t);
+	
+	while(t>0){
+		scanf("%d %d",&r,&c);
+		int gr[r+2][c+2];
+		int fr[r+2][c+2];
+		bool f=false;
+		queue<int> q;
+		for(int i=0;i<r+2;i++){
+			gr[i][0]=-1;
+			gr[i][c+1]=-1;
+			fr[i][0]=-1;
+			fr[i][c+1]=-1;
+		}
+		for(int i=0;i<c+2;i++){
+			gr[0][i]=-1;
+			gr[r+1][i]=-1;
+			fr[0][i]=-1;
+			fr[r+1][i]=-1;
+		}
+		for(int i=1;i<=r;i++){
+			for(int j=1;j<=c;j++){gr[i][j]=0;
+				fr[i][j]=INF;
+			}
+		} 
+		for(int i=1;i<=r;i++){
+			scanf("%s",ar);
+			for(int j=1;j<=c;j++){
+				if(ar[j-1]=='#'){
+					gr[i][j]=-2;
+					fr[i][j]=-2;
+				}else if(ar[j-1]=='J'){xs=i;
+					ys=j;
+				}else if(ar[j-1]=='F'){
+					q.push(i);
+					q.push(j);
+					fr[i][j]=1;
+				}
+			}
+		}
+
+	/*	for(int i=0;i<r+2;i++){
+			for(int j=0;j<c+2;j++){
+				printf("%d ",-1*gr[i][j]);
+			}
+			printf("\n");
+		} */
+		
+		while(!q.empty()){
+			x=q.front();
+			q.pop();
+			y=q.front();
+			//printf("%d %d %d %d\n",x,y,xe,ye );
+			q.pop();
+			d=fr[x][y]+1;
+			if(fr[x-1][y]==0 || d<fr[x-1][y]){
+					fr[x-1][y]=d;
+					q.push(x-1);
+					q.push(y);
+			}
+			if(d<fr[x][y-1]){
+				fr[x][y-1]=d;
+				q.push(x);
+				q.push(y-1);
+			}
+			if(d<fr[x][y+1]){
+				fr[x][y+1]=d;
+				q.push(x);
+				q.push(y+1);
+			}
+			if(d<fr[x+1][y]){
+				fr[x+1][y]=d;
+				q.push(x+1);
+				q.push(y);
+			}
+		} 
+		while(!q.empty())q.pop();
+		bool tr=false;
+		q.push(xs);
+		q.push(ys);
+		gr[xs][ys]=1;
+		while(!q.empty()){
+			x=q.front();
+			q.pop();
+			y=q.front();
+			//printf("%d %d %d %d\n",x,y,xe,ye );
+			q.pop();
+			d=gr[x][y]+1;
+			if(gr[x-1][y]==0 && d<fr[x-1][y]){
+					gr[x-1][y]=d;
+					q.push(x-1);
+					q.push(y);
+			}
+			if(gr[x][y-1]==0 && d<fr[x][y-1]){
+				gr[x][y-1]=d;
+				q.push(x);
+				q.push(y-1);
+			}
+			if(gr[x][y+1]==0 && d<fr[x][y+1]){
+				gr[x][y+1]=d;
+				q.push(x);
+				q.push(y+1);
+			}
+			if(gr[x+1][y]==0 && d<fr[x+1][y]){
+				gr[x+1][y]=d;
+				q.push(x+1);
+				q.push(y);
+			}
+			if(gr[x-1][y]==-1 || gr[x+1][y]==-1 || gr[x][y+1]==-1 || gr[x][y-1]==-1){tr=true;
+				break;
+			}
+		} 
+		
+		if(tr==true)printf("%d\n",gr[x][y]);
+		else printf("IMPOSSIBLE\n");
+		t--;
+	}
+	return 0;
+}

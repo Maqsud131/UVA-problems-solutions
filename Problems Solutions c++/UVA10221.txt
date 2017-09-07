@@ -1,0 +1,27 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+
+int main() {
+	double r,a,O,d,c;
+	double p=2*acos(0.0);
+	char ch[3];
+	while(scanf("%lf %lf %s",&r,&a,&ch)==3){
+		r=r+6440;
+		if(ch[0]=='d'){
+			O=p*a/180;
+			if(O>p) O=2*p-O;
+			c=O*r;
+			d=2*r*sin(O/2);
+		}else{
+			O=p*a/10800;
+			if(O>p) O=2*p-O;
+			c=O*r;
+			d=2*r*sin(O/2);
+		}
+		printf("%.6lf %.6lf\n",c,d);
+	}
+	return 0;
+}

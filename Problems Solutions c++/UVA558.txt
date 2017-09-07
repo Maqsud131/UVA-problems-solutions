@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+int main() {
+	int u,v,w,n,t,m;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d %d",&n,&m);
+		int we[m];
+		int p[m][2];
+		int dt[n];
+		int pa[n];
+		for(int i=0;i<n;i++)dt[i]=2147483646;
+		dt[0]=0;
+		for(int i=0;i<m;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			we[i]=w;
+			p[i][0]=u;
+			p[i][1]=v;
+		}
+		
+		for(int i=0; i<n-1; i++){
+			for(int j=0;j<m;j++){
+				if(dt[p[j][1]]> dt[p[j][0]] + we[j]){
+					dt[p[j][1]]=dt[p[j][0]] + we[j];
+					pa[p[j][1]]=p[j][0];
+				}
+			}
+		}
+		
+		bool tr=false;
+		for(int j=0;j<m;j++){
+			if(dt[p[j][1]]> dt[p[j][0]] + we[j]){
+				tr=true;
+				break;
+			}
+		}
+		
+		if(tr==true)printf("possible\n");
+		else printf("not possible\n");
+		
+		t--;
+	}
+	
+	return 0;
+}

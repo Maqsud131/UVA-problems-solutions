@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int e,co,s,c,n,t,f;
+    scanf("%d",&t);
+    while(t>0){
+        scanf("%d %d %d",&e,&f,&c);
+        s=0;
+        n=e+f;
+        while(n>=c){
+            co=n/c;
+            s=s+co;
+            n=co+n%c;
+        }
+        //if(n==2)printf("%d\n",s);
+         printf("%d\n",s);
+        t--;
+    }
+return 0;
+}

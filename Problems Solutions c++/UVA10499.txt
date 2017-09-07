@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    double n,r,pi,s,c,pa,ta;
+    pi=2*acos(0.0);
+    r=1;
+    s=4*pi*r;
+    c=pi*r;
+    while(true){
+        scanf("%lf",&n);
+        if(n<0)break;
+        ta=s/n;
+        pa=100*(c)/ta;
+        //pa=pa/n;
+        if(n==1)printf("0%%\n");
+        else printf("%.0lf%%\n",pa);
+    }
+    return 0;
+}

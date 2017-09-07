@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int v,p;
+	int q[201];
+	for(int i=1;i<201;i++)q[i]=i*i*i;
+	bool t=false;
+	for(int i=6;i<201;i++){
+		v=q[i];
+		t=false;
+		for(int j=2;j<i;j++){
+			v=v-q[j];
+			for(int k=j;k<i;k++){
+				v=v-q[k];
+				for(int h=k;h<i;h++){
+					if (q[h]==v){
+						printf("Cube = %d, Triple = (%d,%d,%d)\n",i,j,k,h);
+						t=true;
+						break;
+					}
+				}
+				v=v+q[k];
+			}
+			v=v+q[j];
+		}
+	}
+	
+	return 0;
+}

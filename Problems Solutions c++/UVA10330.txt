@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,s,t,e,u,v,w,maxfl;
+	//printf("Network %d\n",tr);
+	while(scanf("%d",&n)==1){
+		if(n==0)break;
+		vector<int> gr[n*2+2];
+		int we[n*2+2][n*2+2];
+		for(int i=1;i<=n*2+2;i++){
+			for(int j=1;j<=n*2+2;j++)we[i][j]=0;
+		}
+		for(int i=1;i<=n;i++){
+			scanf("%d",&e);
+			gr[i].push_back(n+i);
+			gr[n+i].push_back(i);
+			we[i][n+i]=e;
+		}
+		
+		scanf("%d",&e);
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			gr[u+n].push_back(v);
+			gr[v].push_back(u+n);
+			we[u+n][v]=w;
+		}
+		vector<int> targ;
+		vector<int> sor;
+		targ.assign(n*2+2,0);
+		scanf("%d %d",&s,&t);
+		for(int i=0;i<s;i++){
+			scanf("%d",&u);
+			sor.push_back(u);
+		}
+		for(int i=0;i<t;i++){
+			scanf("%d",&u);
+			targ[u+n]=1;
+		}
+		maxfl=0;
+		int pa[n*2+1];
+		
+		while(true){
+			int dt=0;
+			for(int i=0;i<=n*2+1;i++)pa[i]=-1;
+			queue<int> q;
+			for(int x=0;x<sor.size();x++){pa[sor[x]]=sor[x];
+				q.push(sor[x]);
+			}
+			while(!q.empty()){
+				u=q.front();
+				//printf("%d\n",pa[u],u);
+				if(targ[u]==1){dt=u;
+					break;
+				}
+				q.pop();
+				for(int j=0;j<gr[u].size();j++){
+					//printf("- %d %d\n",gr[u][j],we[u][gr[u][j]]);
+					if(pa[gr[u][j]]==-1 && we[u][gr[u][j]]>0){
+						pa[gr[u][j]]=u;
+						q.push(gr[u][j]);
+					}
+				}
+			}
+			if(dt!=0){
+				int tem=999999999;
+				v=dt;
+				while(pa[v]!=v){
+					if(we[pa[v]][v]<tem)tem=we[pa[v]][v];
+					v=pa[v];
+				}
+				v=dt;
+				while(pa[v]!=v){
+					we[pa[v]][v]=we[pa[v]][v]-tem;
+					we[v][pa[v]]=we[v][pa[v]]+tem;
+					//printf("%d %d %d\n",pa[v],v,we[pa[v]][v]);
+					v=pa[v];
+				}
+			//	printf("%d\n",tem);
+				maxfl=maxfl+tem;
+			}else{
+				break;
+			}
+		}
+		printf("%d\n",maxfl);
+	}
+	return 0;
+}

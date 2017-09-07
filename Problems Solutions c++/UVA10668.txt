@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+
+const double eps = 1e-8;
+const double PI = 2*acos(0.0);
+ 
+int main() {
+ 	double L,C,rad,t,co,val,R,r,hi,lo;
+ 	while(scanf("%lf %lf %lf",&L,&t,&co)==3){
+ 		if(L<0)break;
+ 		C=(1+t*co)*L;
+ 		rad=PI/2;
+ 		hi=PI;
+ 		lo=0;
+ 		if(L==0 || t==0 || co==0){printf("0.000\n");
+ 		}else{val=L*rad - 2*C*sin(rad/2);
+ 		while(abs(val)>eps){
+ 			//printf("%.4lf %.4lf\n",V,d);
+ 			if(val>0){
+ 				hi=rad;
+ 				rad=(lo+rad)/2;
+ 			}else if(val<0){
+ 				lo=rad;
+ 				rad=(hi+rad)/2;
+ 			}else {
+ 				break;
+ 			}
+ 			val=L*rad - 2*C*sin(rad/2);
+ 		}
+ 		R=L/(2*sin(rad/2));
+ 		r=sqrt(R*R - L*L/4);
+ 		R=R-r;
+ 		printf("%.3lf\n",R);
+ 		}
+ 	}
+ 	
+	return 0;
+}

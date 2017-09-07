@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	long long n,c;
+	long long po[32];
+	po[0]=1;
+	for(int k=1;k<32;k++)po[k]=po[k-1]*2;
+	char ar[32];
+	while(true){
+		scanf("%s",ar);
+		if(strlen(ar)==1 && ar[0]=='0')break;
+		n=0;
+		for(int i=strlen(ar)-1;i>=0;i--){
+			if(ar[i]=='2'){
+				n=n+2*po[strlen(ar)-i]-2;
+			}
+			if(ar[i]=='1')n=n+(po[strlen(ar)-i]-1);
+		}
+		printf("%lld\n",n);
+	}
+	return 0;
+}

@@ -1,0 +1,99 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+vi p,r;  // p- parent , r- rank
+
+void unionFind(int n){  //clearing parent, rank assgning new values
+	r.assign(n,0);  
+	p.assign(n,0);
+	for(int i=0;i<n;i++)p[i]=i;
+}
+
+int findSet(int i){
+	if(p[i]==i)return i;
+	else return findSet(p[i]);
+}
+
+bool isSameSet(int i,int j){
+	return findSet(i)==findSet(j);
+}
+
+void unionSet(int i,int j){
+	if(!isSameSet(i,j)){
+		int x=findSet(i), y=findSet(j);
+		if(r[x]>r[y]){ p[y]=x;
+		}else{ 
+			p[x]=y;
+			if(r[x]==r[y])r[y]++;
+		}
+	}
+}
+
+int main() {
+	int t,n,e,u,v,w,ml,ml2,p,tem;
+	scanf("%d",&t);
+	for(int j=1;j<=t;j++){
+		scanf("%d %d",&n,&e);
+		//printf("%d %d -- in\n",n,e); /// for testing purpose
+		vector<pair<int,ii> > ed;
+		int el[e];
+		int indg[n];
+		for(int i=0;i<e;i++)el[i]=0;
+		for(int i=0;i<n;i++)indg[i]=0;
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			indg[u-1]++;
+			indg[v-1]++;
+			ed.push_back(make_pair(w,ii(u-1,v-1)));
+			//printf("%d %d %d\n",ed[i].second.first,ed[i].second.second,ed[i].first);
+		}
+		sort(ed.begin(), ed.begin()+e);
+		
+		ml=0;
+		 unionFind(n);
+		 
+		 for(int i=0;i<e;i++){
+		 	pair<int, ii> front=ed[i];
+		 	if(!isSameSet(front.second.first,front.second.second)){
+		 		ml=ml+front.first;
+		 		el[i]=1;
+		 		//if(indg[front.second.first]>1 && indg[front.second.second]>1)p=i;
+				unionSet(front.second.first,front.second.second);
+			}
+		 }
+		
+		ml2=2147383647;
+		for(int k=0;k<e;k++){
+			if(el[k]==1 && indg[ed[k].second.first]>1 && indg[ed[k].second.second]>1){tem=0;
+				unionFind(n);
+				for(int i=0;i<e;i++){
+				 	pair<int, ii> front=ed[i];
+				 	if(el[i]==1 && i!=k){
+				 		tem=tem+front.first;
+				 		//if(indg[front.second.first]>1 && indg[front.second.second]>1)p=i;
+						unionSet(front.second.first,front.second.second);
+					}
+				 }
+				int d = 0;
+                for(int h=0;h<e&&!d;h++)
+                {
+                	pair<int, ii> front=ed[h];
+                    if(!el[h]&&!isSameSet(front.second.first,front.second.second))
+                    {
+                    	//printf("sdf\n");
+                        tem+=front.first;
+                        d=1;
+                    }
+                }
+                if(d&&tem<ml2)
+                    ml2= tem;
+			}
+		}
+		printf("%d %d\n",ml,ml2);
+	}
+	return 0;
+}

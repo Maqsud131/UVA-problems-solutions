@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+
+
+int xmin=0, ymax=0, xmax=0, ymin=0;
+
+  int makeoutcode(int x, int y){
+  	int top=8;
+	int bottom=4;
+	int right=2;
+	int left=1;
+		int code = 0;
+		if(y>ymax)code|=top;
+		if(y<ymin)code|=bottom;
+		if(x>xmax)code|=right;
+		if(x<xmin)code|=left;
+		return code;
+	}
+
+int main() {
+	int top=8;
+	int bottom=4;
+	int right=2;
+	int left=1;
+	int n;
+	scanf("%d",&n);
+	for(int c=0;c<n;c++){
+		int xs,ys,xe,ye;
+		scanf("%d %d %d %d %d %d %d %d",&xs,&ys,&xe,&ye,&xmin,&ymax,&xmax,&ymin);
+		if(xmin >xmax){
+			int j=xmin;
+			xmin=xmax;
+			xmax=j;
+		}
+		if(ymin >ymax){
+			int j=ymin;
+			ymin=ymax;
+			ymax=j;
+		}
+			int outcode0 = makeoutcode(xs,ys);
+			int outcode1 = makeoutcode(xe,ye);
+			bool f=false;
+			while(1){
+				if(outcode0==0 && outcode1==0){
+					printf("T\n");
+					break;
+				}else if((outcode0 & outcode1)!=0){
+					printf("F\n");
+					break;
+				}else{
+						f=true;
+					  int x,y,temp;
+   					 if(outcode0==0)
+   						 temp=outcode1;
+			 		 else
+			   			 temp = outcode0;
+			   		 if(temp & top){
+			   			 y=ymax;
+			   			 x=xs + (y-ys)*(xe-xs)/(ye-ys);
+			  		 }else if(temp & bottom){
+			   			 y=ymin;
+			  			 x=xs +(y-ys)*(xe-xs)/(ye-ys);
+			   		 }else if(temp & right){
+			 			 x=xmax;
+			  			 y=ys+(x-xs)*(ye-ys)/(xe-xs);
+			   		 }else if(temp & left){
+			  			 x=xmin;
+			  			 y=ys+(x-xs)*(ye-ys)/(xe-xs);
+			  		 }
+
+			 		 if(temp == outcode0){
+			  			 xs=x;
+			   			 ys=y;
+			   			 outcode0 = makeoutcode(xs,ys);
+			   		 }else{
+			   			 xe=x;
+			  			 ye=y;
+			   			 outcode1 = makeoutcode(xe,ye);
+			  		 }
+				}
+			}
+	}
+	return 0;
+}

@@ -1,0 +1,54 @@
+    #include <bits/stdc++.h>
+    using namespace std;
+     
+    #define INF 999999999;
+    typedef pair<int, int> ii;
+    typedef pair<ii,ii> pipi;
+    typedef vector<ii> vii;
+    typedef vector<int> vi;
+     
+     
+     
+    int main() {
+    	int ca,c,r,ux,uy,vx,vy;
+    	scanf("%d",&ca);
+    	for(int z=1;z<=ca;z++){
+    		scanf("%d %d",&r,&c);
+    		int gr[r+2][c+2];
+    		int dt[r+2][c+2];
+    		for(int i=1;i<=r;i++){
+    			for(int j=1;j<=c;j++)scanf("%d",&gr[i][j]);
+    		}
+    		
+    		for(int i=0;i<r+2;i++)gr[i][0]= gr[i][c+1]=-1;
+    		for(int j=0;j<c+2;j++)gr[0][j]= gr[r+1][j]=-1;
+    		for(int i=1;i<=r;i++){
+    			for(int j=1;j<=c;j++)dt[i][j]=INF;
+    		}
+     
+    		dt[1][1]=gr[1][1];
+    		priority_queue<pair<int,ii>> pq;
+    		
+    		if(gr[1][2]!=-1)pq.push(make_pair(-gr[1][2]-dt[1][1],ii(1,2)));
+    		//if(gr[2][2]!=-1)pq.push(make_pair(-gr[2][2]-dt[1][1],ii(2,2)));
+    		if(gr[2][1]!=-1)pq.push(make_pair(-gr[2][1]-dt[1][1],ii(2,1)));
+    		
+    		while(!pq.empty()){
+    			pair<int,ii> ed=pq.top();
+    			pq.pop();
+    			vx=ed.second.second;
+    			vy=ed.second.first;
+    			//printf("%d %d\n",vy,vx);
+    			if(dt[vy][vx]>-ed.first){
+    				dt[vy][vx]=-ed.first;
+    				if(gr[vy-1][vx]!=-1)pq.push(make_pair(-dt[vy][vx]-gr[vy-1][vx],ii(vy-1,vx)));
+    				if(gr[vy+1][vx]!=-1)pq.push(make_pair(-dt[vy][vx]-gr[vy+1][vx],ii(vy+1,vx)));
+    				if(gr[vy][vx-1]!=-1)pq.push(make_pair(-dt[vy][vx]-gr[vy][vx-1],ii(vy,vx-1)));
+    				if(gr[vy][vx+1]!=-1)pq.push(make_pair(-dt[vy][vx]-gr[vy][vx+1],ii(vy,vx+1)));
+    			}
+    			if(vx==c && vy==r)break;
+    		}
+			printf("%d\n",dt[r][c]);
+    	}
+    	return 0;
+    }

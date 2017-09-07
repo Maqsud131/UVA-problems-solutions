@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// MST kruskal implementation .... uva 11631 Dark roads
+
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+vi p,r;  // p- parent , r- rank
+int n,e,w,u,v;
+
+void unionFind(int n){  //clearing parent, rank assgning new values
+	r.assign(n,0);  
+	p.assign(n,0);
+	for(int i=0;i<n;i++)p[i]=i;
+}
+
+int findSet(int i){
+	if(p[i]==i)return i;
+	else return findSet(p[i]);
+}
+
+bool isSameSet(int i,int j){
+	return findSet(i)==findSet(j);
+}
+
+void unionSet(int i,int j){
+	if(!isSameSet(i,j)){
+		int x=findSet(i), y=findSet(j);
+		if(r[x]>r[y]){ p[y]=x;
+		}else{ 
+			p[x]=y;
+			if(r[x]==r[y])r[y]++;
+		}
+	}
+}
+
+int main() {
+	while(scanf("%d %d",&n,&e)==2){
+		if(n==0)break;
+		vector<pair<int,ii>> eL; // edge list 
+		int tco=0;
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			eL.push_back(make_pair(w,ii(u,v)));
+			tco+=w;
+		}
+		
+		sort(eL.begin(),eL.end());
+		
+	    int mst_len=0;
+		
+		unionFind(n);
+		
+		for(int i=0;i<e;i++){
+			pair<int, ii> front = eL[i];
+			if(!isSameSet(front.second.first,front.second.second)){
+				mst_len += front.first;
+				unionSet(front.second.first,front.second.second);
+			}
+		}
+		printf("%d\n",tco-mst_len);
+	}
+	return 0;
+}

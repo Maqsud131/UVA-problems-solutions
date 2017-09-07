@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int n,k,s,c;
+    while(scanf("%d",&n)==1){
+        s=n;
+        k=3;
+        while(n>=k){
+            c=n/k;
+            s=s+c;
+            n=c+n%k;
+        }
+        if(n==2)printf("%d\n",s+1);
+        else printf("%d\n",s);
+    }
+return 0;
+}

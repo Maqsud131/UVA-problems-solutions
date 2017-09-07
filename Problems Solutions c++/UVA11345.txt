@@ -1,0 +1,32 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+int main(){
+	int t,n;
+	scanf("%d",&t);
+	for(int q=1;q<=t;q++){
+		scanf("%d",&n);
+		int xmin = -10000;
+		int xmax = 10000;
+		int ymin = -10000;
+		int ymax = 10000;
+		int ar[n][4];
+		for(int w=0;w<n;w++){
+			scanf("%d %d %d %d",&ar[w][0],&ar[w][1],&ar[w][2],&ar[w][3]);
+			if(ar[w][0]>xmin) xmin=ar[w][0];
+			if(ar[w][2]<xmax) xmax=ar[w][2];
+			if(ar[w][1]>ymin) ymin=ar[w][1];
+			if(ar[w][3]<ymax) ymax=ar[w][3];
+		}
+		//printf("%d %d %d %d\n",xmin,xmax,ymin,ymax);
+		int area=0;
+		if(xmax>xmin && ymax>ymin){
+			area=(xmax-xmin)*(ymax-ymin);
+		}
+		printf("Case %d: %d\n",q,area);
+	}
+	
+	return 0;
+}

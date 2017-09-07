@@ -1,0 +1,21 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+int main() {
+	int n,t=1;
+	double pi = 2.0*acos(0.0);
+	double a,R,r,of,sp;
+	while(scanf("%d %lf",&n,&a)==2){
+		//printf("%d  %.5f\n",n,a);
+		if(n<3) break;
+		R=sqrt(2.0*a/(n*sin(2.0*pi/n)));
+		sp=pi*R*R-a;
+		r=R*cos(pi/n);
+		of=a-pi*r*r;
+		printf("Case %d: %.5f %.5f\n",t,sp,of);
+		t++;
+	}
+	return 0;
+}

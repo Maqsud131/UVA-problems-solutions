@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,j,i,q,v,a,m;
+	scanf("%d",&t);
+	
+	while(t>0){
+		scanf("%d",&n);
+		i=cbrt(n);
+		bool tr=false;
+		m=999999999;
+		for(;i>0;i--){
+			v=n;
+			if(v%i==0){
+				v=v/i;
+				j=sqrt(v);
+				for(;j>0;j--){
+					if(v%j==0){
+						v=v/j;
+						//tr=true;
+						a=2*(i*j + i*v + j*v);
+						if(a<m)m=a;
+						break;
+					}
+				}
+			}
+			//if(tr==true);
+		}
+		
+		printf("%d\n",m);
+		t--;
+	}
+	return 0;
+}

@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,s,x,y,d1,d2;
+	char a1[110];
+	char a2[110];
+	scanf("%d",&t);
+	for(int k=1;k<=t;k++){
+		s=0;
+		scanf("%d %s %s",&n,a1,a2);
+		for(int i=0;i<strlen(a1);i++){
+			x=(int)a1[i]-48;
+			y=(int)a2[i]-48;
+			d1=abs(x-y);
+			if(x>y)y=y+10;
+			else x=x+10;
+			d2=abs(x-y);
+			if(d1<d2)s=s+d1;
+			else s=s+d2;
+		}
+		printf("Case %d: %d\n",k,s);
+	}
+	return 0;
+}

@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int t;
+    long long n,c,r;
+    scanf("%d",&t);
+    for(int i=1;i<=t;i++){
+        scanf("%lld",&n);
+        c=2*n;
+        r=(-1+sqrt(1+4*c))/2;
+        printf("%lld\n",r);
+    }
+    return 0;
+}

@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,s,t,e,u,v,w,maxfl,tr;
+	tr=1;
+	while(scanf("%d",&n)==1){
+		if(n==0)break;
+		scanf("%d %d %d",&s,&t,&e);
+		vector<int> gr[n+1];
+		vector<int> we[n+1][n+1];
+		int edg[n+1][n+1];
+		//int fl[n+1][n+1];
+		
+		
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			gr[u].push_back(v);
+			we[u][v].push_back(w);
+			gr[v].push_back(u);
+			we[v][u].push_back(w);
+		}
+		maxfl=0;
+		int pa[n+1];
+		printf("Network %d\n",tr);
+		while(true){
+			for(int i=0;i<=n;i++){
+				for(int j=0;j<=n;j++)edg[n+1][n+1]=0;
+			}
+			for(int i=0;i<=n;i++)pa[i]=-1;
+			pa[s]=s;
+			queue<int> q;
+			q.push(s);
+			while(!q.empty()){
+				u=q.front();
+				if(u==t)break;
+				q.pop();
+				for(int j=0;j<gr[u].size();j++){
+					v=gr[u][j];
+					if(pa[v]==-1){
+						for(int k=0;k<we[u][v].size();k++){
+							if(we[u][v][k]>0){
+								edg[u][v]=k;
+								pa[v]=u;
+								q.push(v);
+								break;
+							}
+						}
+					}
+				}
+			}
+			if(pa[t]!=-1){
+				int tem=99999999;
+				v=t;
+				while(pa[v]!=v){
+					u=pa[v];
+					if(we[u][v][edg[u][v]]<tem)tem=we[u][v][edg[u][v]];
+					v=u;
+				}
+				v=t;
+				while(pa[v]!=v){
+					u=pa[v];
+					we[u][v][edg[u][v]]=we[u][v][edg[u][v]]-tem;
+					v=u;
+				}
+			//	printf("%d\n",tem);
+				maxfl=maxfl+tem;
+			}else{
+				break;
+			}
+		}
+		
+		printf("The bandwidth is %d.\n",maxfl);
+		printf("\n");
+		tr++;
+	}
+	return 0;
+}

@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,f;
+	double ar,an,e,sp,tl,pr;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d",&f);
+		tl=0;
+		for(int i=0;i<f;i++){
+			scanf("%lf %lf %lf",&ar,&an,&e);
+			sp=e*ar/an;
+			pr=sp*an;
+			tl=tl+pr;
+		}
+		printf("%.0lf\n",tl);
+		
+		t--;
+	}
+	return 0;
+}

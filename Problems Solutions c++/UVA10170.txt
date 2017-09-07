@@ -1,0 +1,15 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	long long n,d,r;
+	double c;
+	while(scanf("%lld %lld",&n,&d)==2){
+		c=2*d-2+(n*n-n);
+		//c=sqrt(c*c);
+		r=(1+sqrt(1+4*c))/2;
+		if(n>=d)printf("%lld\n",n);
+		else printf("%lld\n",r);
+	}
+	return 0;
+}

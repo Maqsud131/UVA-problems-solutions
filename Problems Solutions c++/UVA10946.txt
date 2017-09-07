@@ -1,0 +1,96 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef pair<int, char> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+int x,y,r,c,w,k,co;
+int ar[26];
+
+
+
+int main() {
+	co=1;
+	while(scanf("%d %d",&x,&y)==2){
+		if(x==0)break;
+		char gr[x+2][y+2];
+		int col[x+2][y+2];
+		char ar[y];
+		for(int i=0;i<x;i++){
+			scanf("%s",ar);
+			for(int j=0;j<y;j++){gr[i+1][j+1]=ar[j];
+				col[i+1][j+1]=0;
+			}
+		}
+		
+		for(int i=0;i<=x+1;i++)col[i][0]=col[i][y+1]=1;
+		for(int i=0;i<=y+1;i++)col[0][i]=col[x+1][i]=1;
+		vii li;
+		
+		for(int i=1;i<=x;i++){
+			for(int j=1;j<=y;j++){
+				char ch=gr[i][j];
+				if(ch!='.' && col[i][j]==0){
+					w=1;
+					queue<int> q;
+					col[i][j]=1;
+					q.push(i);
+					q.push(j);
+					while(!q.empty()){
+						r=q.front();
+						q.pop();
+						c=q.front();
+						q.pop();
+						
+						if(gr[r-1][c]==ch && col[r-1][c]==0){
+							q.push(r-1);
+							q.push(c);
+							col[r-1][c]=1;
+							w++;
+						}
+						
+						if(gr[r][c-1]==ch && col[r][c-1]==0){
+							q.push(r);
+							q.push(c-1);
+							col[r][c-1]=1;
+							w++;
+						}
+						if(gr[r][c+1]==ch && col[r][c+1]==0){
+							q.push(r);
+							q.push(c+1);
+							col[r][c+1]=1;
+							w++;
+						}
+						
+						if(gr[r+1][c]==ch && col[r+1][c]==0){
+							q.push(r+1);
+							q.push(c);
+							col[r+1][c]=1;
+							w++;
+						}
+					}
+					li.push_back(make_pair(w,ch));
+				}
+			}
+		}
+		
+		sort(li.begin(),li.end());
+		printf("Problem %d:\n",co);
+		stack<int> st;
+		for(int i=li.size()-1;i>0;i--){
+			st.push(i);
+			while(li[i].first==li[i-1].first){st.push(i-1);
+				i--;
+			}
+			while(!st.empty()){ k=st.top();
+				st.pop();
+				printf("%c %d\n",li[k].second,li[k].first);
+			}
+		}
+		if(li.size()>1 && li[0].first!=li[1].first)printf("%c %d\n",li[0].second,li[0].first);
+		else if(li.size()==1)printf("%c %d\n",li[0].second,li[0].first);
+		co++;
+	}
+	return 0;
+}

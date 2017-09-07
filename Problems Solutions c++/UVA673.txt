@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t;
+	char ch;
+	string s;
+	cin>>t;
+	cin.ignore();
+	char ar[130];
+	while(t>0){
+		getline(cin,s);
+		stack<char> st;
+		
+		int i=0;
+		for(;i<s.length();i++){
+			if(s.at(i)=='(')st.push('(');
+			if(s.at(i)=='[')st.push('[');
+			if(s.at(i)==')'){
+				if(st.size()==0)break;
+				if(st.top()=='(')st.pop();
+			}
+			if(s.at(i)==']'){
+				if(st.size()==0)break;
+				if(st.top()=='[')st.pop();
+				
+			}
+			//printf("%d\n",st.size());
+		}
+		
+		if(s.length()==0) printf("Yes\n");
+		else if(st.empty()==true && i==s.length()) printf("Yes\n");
+		else printf("No\n");
+		t--;
+	}
+	return 0;
+}

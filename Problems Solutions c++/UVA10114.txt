@@ -1,0 +1,59 @@
+#include <iostream>
+#include <stdio.h>
+#include <queue>
+using namespace std;
+
+int main() {
+//	printf("dfdfdf");
+	int m,l,s,s1;
+	double dp,am,a1,a2,p;
+	
+	bool t;
+	while(1){
+		
+		scanf("%d %lf %lf %d",&m,&dp,&am,&l);
+		if(m<0)break;
+		std::queue<double> q;
+		std::queue<int> q1;
+		scanf("%d %lf",&s,&p);
+		q.push(1-p);
+		for(int i=1;i<l;i++){
+			scanf("%d %lf",&s1,&p);
+			q.push(1-p);
+			q1.push(s1-s);
+			s=s1;
+		}
+		q1.push(m-s1);
+		a1=am+dp;
+		a2=am;
+		int co=0;
+		t=false;
+		dp=am/m;
+		for(int z=0;z<m;z++){
+			p=q.front();
+			l=q1.front();
+			q.pop();
+			q1.pop();
+			for(int j=0;j<l;j++){
+				if(co>0)a2=a2-dp;
+				a1=a1*p;
+				//printf("%lf %lf %lf\n",a1,a2,p);
+				if(a2<a1){
+					//printf("%lf %lf\n",a1,a2);
+					t=true;
+					break;
+				}
+				co++;
+				if(co==m){
+					//printf("%lf %lf\n",a1,a2);
+					t=true;
+					break;
+				}
+			}
+			if(t==true)break;
+		}
+		if(co!=1) printf("%d months\n",co);
+		else printf("%d month\n",co);
+	}
+	return 0;
+}

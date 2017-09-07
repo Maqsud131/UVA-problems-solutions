@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int table[8000][5];
+
+int co(int c[],int m,int am){
+	int i,j,x,y;
+	for (i = 1; i < am+1; i++)
+    {
+        for (j = 0; j < m; j++)
+        {
+            x = (i-c[j] >= 0)? table[i - c[j]][j]: 0;
+ 
+            y = (j >= 1)? table[i][j-1]: 0;
+ 
+            table[i][j] = x + y;
+        }
+    }
+	return table[am][m-1];
+}
+
+int main() {
+	int am,m;
+	int coin[] = {1,5,10,25,50};
+	for (int i=0; i<8000; i++)
+        table[0][i] = 1;
+//	printf("%d\n",sizeof(coin[0]));
+	while(scanf("%d",&am)==1){
+		m=sizeof(coin)/sizeof(coin[0]);
+		printf("%d\n",co(coin, m, am));
+		
+	}
+	return 0;
+}

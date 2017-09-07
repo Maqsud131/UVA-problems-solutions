@@ -1,0 +1,108 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+	int n,s,t,e,u,v,w,dt;
+	s=1,t=2;
+	while(scanf("%d %d",&n,&e)==2){
+		if(n==0)break;
+		vector<int> gr[n+2];
+		int re[n+2][n+2];
+		int co[n+2][n+2];
+		for(int i=1;i<=n;i++){
+			for(int j=1;j<=n;j++)re[i][j]=co[i][j]=0;
+		}
+		
+		for(int i=0;i<e;i++){
+			scanf("%d %d %d",&u,&v,&w);
+			gr[u].push_back(v);
+			gr[v].push_back(u);
+			//we[u][v]=w;
+			re[u][v]=w;
+			re[v][u]=w;
+		}
+		int pa[n+1];
+		
+		while(true){
+			int dt=0;
+			for(int i=0;i<=n;i++)pa[i]=-1;
+			queue<int> q;
+			q.push(s);
+			pa[s]=s;
+			while(!q.empty()){
+				u=q.front();
+				//printf("%d\n",pa[u],u);
+				if(u==t){dt=u;
+					break;
+				}
+				q.pop();
+				for(int j=0;j<gr[u].size();j++){
+					//printf("- %d %d\n",gr[u][j],we[u][gr[u][j]]);
+					if(pa[gr[u][j]]==-1 && re[u][gr[u][j]]>0){
+						pa[gr[u][j]]=u;
+						q.push(gr[u][j]);
+					}
+				}
+			}
+			if(dt!=0){
+				int tem=999999999;
+				v=dt;
+				while(pa[v]!=v){
+					if(re[pa[v]][v]<tem)tem=re[pa[v]][v];
+					v=pa[v];
+				}
+				v=dt;
+				while(pa[v]!=v){
+					re[pa[v]][v]=re[pa[v]][v]-tem;
+					re[v][pa[v]]=re[v][pa[v]]-tem;
+					//printf("%d %d %d\n",pa[v],v,we[pa[v]][v]);
+					v=pa[v];
+				}
+			}else{
+				break;
+			}
+		}
+		
+	//	for(int i=1;i<=n;i++){
+	//		for(int j=0;j<gr[i].size();j++)printf("%d - %d %d\n",i,gr[i][j],re[i][gr[i][j]]);
+	//	}
+		
+		int mar[n+1];
+		for(int i=0;i<=n;i++)pa[i]=-1,mar[i]=0;
+		queue<int> q;
+		q.push(s);
+		pa[s]=s;
+		while(!q.empty()){
+			u=q.front();
+			//printf("%d\n",pa[u],u);
+			q.pop();
+			for(int j=0;j<gr[u].size();j++){
+				//printf("- %d %d\n",gr[u][j],we[u][gr[u][j]]);
+				if(pa[gr[u][j]]==-1){
+					if(re[u][gr[u][j]]>0){
+						pa[gr[u][j]]=u;
+						q.push(gr[u][j]);
+					}else{
+						pa[gr[u][j]]=u;
+						co[u][gr[u][j]]=1;
+						co[gr[u][j]][u]=1;
+						mar[gr[u][j]]=1;
+					}
+				}else if(mar[gr[u][j]]==1 && re[u][gr[u][j]]>0){
+					for(int k=1;k<=n;k++)co[gr[u][j]][k]=co[k][gr[u][j]]=0;
+					mar[gr[u][j]]=2;
+					q.push(gr[u][j]); // exp line 
+				}else if(mar[gr[u][j]]==1 && re[u][gr[u][j]]==0){
+					co[u][gr[u][j]]=1;
+					co[gr[u][j]][u]=1;
+				}
+			}
+		}
+		for(int i=1;i<=n;i++){
+			for(int j=i+1;j<=n;j++)if(co[i][j]==1)printf("%d %d\n",i,j);
+		}
+		printf("\n");
+	}
+	return 0;
+}

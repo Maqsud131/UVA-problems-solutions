@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	long long a,b,co,n,s;
+	int c=1;
+	while(scanf("%lld %lld",&a,&b)==2){
+		if(a==0)break;
+		co=0;
+		if(a<b){
+			a=a+b;
+			b=a-b;
+			a=a-b;
+		}
+		s=a*(a-1)/2;
+		n=b*(b-1)/2;
+		co=s*n;
+		printf("Case %d: %lld\n",c,co);
+		c++;
+	}
+	return 0;
+}

@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,m,c;
+	char ar[160];
+	char ch;
+	
+	scanf("%d",&t);
+	for(int k=1;k<=t;k++){
+		scanf("%s",ar);
+		m=0;
+		c=1;
+		if(ar[0]=='>' || ar[0]=='<' || ar[strlen(ar)-1]=='>' || ar[strlen(ar)-1]=='<'){
+			m=1;
+		}
+		if(ar[0]=='>' || ar[0]=='<')c=0;
+		
+		for(int i=1;i<strlen(ar);i++){
+			//printf("%d\n",c);
+			if(ar[i]=='>'){
+				c++;
+				if(c>m)m=c;
+				c=0;
+			}
+			if(ar[i]=='<')c=0;
+			if(ar[i]=='-' || ar[i]=='='){
+				if(ar[i-1]==ar[i])c++;
+				else c=1;
+			}
+		}
+		c=1;
+		 if(ar[strlen(ar)-1]=='>' || ar[strlen(ar)-1]=='<')c=0;
+		if(ar[strlen(ar)-1]=='>' || ar[strlen(ar)-1]=='<'){
+			c=0;
+		}
+		for(int i=strlen(ar)-2;i>=0;i--){
+		//	printf("%d\n",c);
+			if(ar[i]=='<'){
+				c++;
+				if(c>m)m=c;
+					//printf("%d\n",m);}
+				c=0;
+			}
+			if(ar[i]=='>')c=0;
+			if(ar[i]=='-' || ar[i]=='='){
+				if(ar[i]==ar[i+1])c++;
+				else c=1;
+			}
+		}
+		if(m>0)printf("Case %d: %d\n",k,m);
+		else printf("Case %d: -1\n",k,m);
+	}
+	return 0;
+}

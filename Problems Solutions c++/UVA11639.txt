@@ -1,0 +1,29 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() {
+	int c,a0,a1,sa,wa,ua,xl,yl,xh,yh;
+	scanf("%d",&c);
+	int ar[2][4];
+	for(int i=1;i<=c;i++){
+		scanf("%d %d %d %d",&ar[0][0],&ar[0][1],&ar[0][2],&ar[0][3]);
+		scanf("%d %d %d %d",&ar[1][0],&ar[1][1],&ar[1][2],&ar[1][3]);
+		a0=(ar[0][2]-ar[0][0])*(ar[0][3]-ar[0][1]);
+		a1=(ar[1][2]-ar[1][0])*(ar[1][3]-ar[1][1]);
+		if(ar[0][0]>=ar[1][0])xl=ar[0][0];
+		else xl=ar[1][0];
+		if(ar[0][2]>=ar[1][2])xh=ar[1][2];
+		else xh=ar[0][2];
+		if(ar[0][1]>=ar[1][1])yl=ar[0][1];
+		else yl=ar[1][1];
+		if(ar[0][3]>=ar[1][3])yh=ar[1][3];
+		else yh=ar[0][3];
+		if(xl<xh && yl<yh)sa=(xh-xl)*(yh-yl);
+		else sa=0;
+		wa=a0+a1-2*sa;
+		ua=10000-(wa+sa);
+		printf("Night %d: %d %d %d\n",i,sa,wa,ua);
+	}
+	return 0;
+}

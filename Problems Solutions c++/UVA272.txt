@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	string s;
+	bool t=true;
+	while(getline(cin,s)){
+		for(int i=0;i<s.size();i++){
+			if(s.at(i)=='"'){
+				if(t==true){
+					printf("``");
+					t=false;
+				}else{ printf("''");
+					t=true;
+				}
+			}else{
+				printf("%c",s.at(i));
+			}
+		}
+		printf("\n");
+	}
+	return 0;
+}

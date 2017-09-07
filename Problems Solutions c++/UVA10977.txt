@@ -1,0 +1,151 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+	int r,c,m,n,x,y,l,s,xi,yi;
+	while(scanf("%d %d",&r,&c)==2){
+		if(r==0)break;
+		scanf("%d",&m);
+		int gr[r+2][c+2];
+		for(int i=1;i<=r;i++){
+			for(int j=1;j<=c;j++)gr[i][j]=0;
+		}
+		for(int i=0;i<r+2;i++){
+			gr[i][0]=111;
+			gr[i][c+1]=111;
+		}
+		for(int i=0;i<c+2;i++){
+			gr[0][i]=111;
+			gr[r+1][i]=111;
+		}
+		for(int i=0;i<m;i++){
+			scanf("%d %d",&x,&y);
+			gr[x][y]=1;
+		}
+		scanf("%d",&n);
+		for(int i=1;i<=n;i++){
+			scanf("%d %d %d",&x,&y,&l);
+			xi=x;
+			yi=y;
+			gr[x][y]=i;
+			queue<int> q;
+			queue<int> st;
+			q.push(x);
+			q.push(y);
+			//st.push(0);
+			l=l*l;
+			while(!q.empty()){
+              //  s=st.front();
+               // st.pop();
+                x=q.front();
+                q.pop();
+                y=q.front();
+                q.pop();
+                //printf("%d %d\n",x,y);
+                //if(s>l)break;
+                if(x-1>0 && (xi-x+1)*(xi-x+1)+(yi-y)*(yi-y)<=l ){
+                	if(gr[x-1][y]<i){
+                		gr[x-1][y]=i;
+                		q.push(x-1);
+                		q.push(y);
+                		//st.push(s+1);
+                	}
+                }
+                if(x+1<=r && (xi-x-1)*(xi-x-1)+(yi-y)*(yi-y)<=l){
+                	if(gr[x+1][y]<i){
+                		gr[x+1][y]=i;
+                		q.push(x+1);
+                		q.push(y);
+                		//st.push(s+1);
+                	}
+                }
+                if(y+1<=c && (xi-x)*(xi-x)+(yi-y-1)*(yi-y-1)<=l){
+                	if(gr[x][y+1]<i){
+                		gr[x][y+1]=i;
+                		q.push(x);
+                		q.push(y+1);
+                		//st.push(s+1);
+                	}
+                }
+                if(y-1>0 && (xi-x)*(xi-x)+(yi-y+1)*(yi-y+1)<=l){
+                	if(gr[x][y-1]<i){
+                		gr[x][y-1]=i;
+                		q.push(x);
+                		q.push(y-1);
+                		//st.push(s+1);
+                	}
+                }
+			}
+		}
+		
+	/*	for(int i=1;i<=r;i++){
+			for(int j=1;j<=c;j++)printf("%d",gr[i][j]);
+			printf("\n");
+		} */
+	//	printf("%d\n",gr[2][3]);
+		queue<int> q;
+			queue<int> st;
+			q.push(1);
+			q.push(1);
+			st.push(0);
+			gr[1][1]=1;
+			while(q.empty()==false){
+				
+                s=st.front();
+                st.pop();
+                x=q.front();
+                q.pop();
+                y=q.front();
+              // printf("cu %d %d\n",x,y);
+                q.pop();
+                if(x==r && y==c)break;
+              
+                if(x-1>0){
+                	if(gr[x-1][y]==0){
+                	//	printf("%d %d\n",x-1,y);
+                		gr[x-1][y]=1;
+                		q.push(x-1);
+                		q.push(y);
+                		st.push(s+1);
+                	}
+                }
+                //printf("ch\n");
+                if(x+1<=r){
+                	if(gr[x+1][y]==0){
+                	//	printf("%d %d\n",x+1,y);
+                		gr[x+1][y]=1;
+                		q.push(x+1);
+                		q.push(y);
+                		st.push(s+1);
+                	}
+                }
+               // printf("ch\n");
+                if(y+1<=c){
+                	if(gr[x][y+1]==0){
+                	//	printf("%d %d\n",x,y+1);
+                		gr[x][y+1]=1;
+                		q.push(x);
+                		q.push(y+1);
+                		st.push(s+1);
+                	}
+                }
+               // printf("ch\n");
+                if(y-1>0){
+                	if(gr[x][y-1]==0){
+                	//	printf("%d %d\n",x,y-1);
+                		gr[x][y-1]=1;
+                		q.push(x);
+                		q.push(y-1);
+                		st.push(s+1);
+                	}
+                }
+               // printf("ch\n");
+			}
+		if(x==r && y==c)printf("%d\n",s);
+		else printf("Impossible.\n");
+		
+		
+	}
+	return 0;
+}

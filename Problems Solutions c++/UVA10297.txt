@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pii;
+ 
+#define ff first
+#define sc second
+#define sz(a) a.size
+#define clr(a) a.clear()
+#define pb(a) push_back(a)
+#define mp(a,b) make_pair(a,b)
+#define all(a) a.begin(), a.end()
+#define init(a,b) memset(a,b,sizeof(a))
+ 
+const int INF = 1<<29;
+const double eps = 1e-8;
+const double PI = 2*acos(0.0);
+
+int main() {
+ 	double hi,lo,D,Ds,d,p3,p4,V,v;
+ 	p3=PI/12;
+ 	p4=PI/4;
+ 	while(scanf("%lf %lf",&D,&v)==2){
+ 		if(D==0)break;
+ 		Ds=D*D;
+ 		v=Ds*D*PI/4-v;
+ 		hi=D;
+ 		lo=0;
+ 		d=D/2;
+ 		V=d*d*d*p4 + p3*(D-d)*(d*d + d*D + Ds);
+ 		while(abs(V-v)>eps){
+ 			//printf("%.4lf %.4lf\n",V,d);
+ 			if(V-v>0){
+ 				hi=d;
+ 				d=(lo+d)/2;
+ 			}else if(V-v<0){
+ 				lo=d;
+ 				d=(hi+d)/2;
+ 			}else {
+ 				break;
+ 			}
+ 			V=d*d*d*p4 + p3*(D-d)*(d*d + d*D + Ds);
+ 		}
+ 		printf("%.3lf\n",d);
+ 	}
+	return 0;
+}

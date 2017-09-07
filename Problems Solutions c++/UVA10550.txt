@@ -1,0 +1,22 @@
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+int main() {
+	int p,a,b,c,d;
+	while(1){
+		scanf("%d %d %d %d",&p,&a,&b,&c);
+		if(p==0 && b==0 && c==0 && a==0)break;
+		d=720;
+		if(p>=a)d=d+(p-a)*9;
+		else d=d+(p+(40-a))*9;
+		d=d+360;
+		if(b>=a)d=d+(b-a)*9;
+		else d=d+(b+(40-a))*9;
+		if(c>b)d=d+(b+(40-c))*9;
+		else d=d+(b-c)*9;
+		printf("%d\n",d);
+	}
+	return 0;
+}

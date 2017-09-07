@@ -1,0 +1,113 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,r,c,n,x,y,xs,ys,xe,ye;
+	char ar[110];
+	scanf("%d",&t);
+	
+	while(t>0){
+		scanf("%d %d",&r,&c);
+		int gr[r+2][c+2];
+		for(int i=0;i<r+2;i++){
+			gr[i][0]=-1;
+			gr[i][c+1]=-1;
+		}
+		for(int i=0;i<c+2;i++){
+			gr[0][i]=-1;
+			gr[r+1][i]=-1;
+		}
+		for(int i=1;i<=r;i++){
+			for(int j=1;j<=c;j++)gr[i][j]=0;
+			
+		} 
+		for(int i=1;i<=r;i++){
+			scanf("%s",ar);
+			for(int j=1;j<=c;j++){
+				if(ar[j-1]=='Z'){
+					gr[i][j]=-1;
+					if(i-2>0 && j-1>0)gr[i-2][j-1]=-1;
+					if(i-2>0 && j+1<=c)gr[i-2][j+1]=-1;
+					if(i+2<=r && j-1>0)gr[i+2][j-1]=-1;
+					if(i+2<=r && j+1<=c)gr[i+2][j+1]=-1;
+					if(i-1>0 && j-2>0)gr[i-1][j-2]=-1;
+					if(i-1>0 && j+2>0)gr[i-1][j+2]=-1;
+					if(i+1>0 && j-2>0)gr[i+1][j-2]=-1;
+					if(i+1>0 && j+2>0)gr[i+1][j+2]=-1;
+				}else if(ar[j-1]=='A'){xs=i;
+					ys=j;
+				}else if(ar[j-1]=='B'){xe=i;
+					ye=j;
+				}
+			}
+		}
+		gr[xs][ys]=0;
+		gr[xe][ye]=0;
+	/*	for(int i=0;i<r+2;i++){
+			for(int j=0;j<c+2;j++){
+				printf("%d ",-1*gr[i][j]);
+			}
+			printf("\n");
+		} */
+		bool tf=false;
+		queue<int> q;
+		q.push(xs);
+		q.push(ys);
+		gr[xs][ys]=1;
+		while(q.empty()==false){
+			x=q.front();
+			q.pop();
+			y=q.front();
+			//printf("%d %d %d %d\n",x,y,xe,ye );
+			q.pop();
+			if(x==xe && y==ye){tf=true;
+				break;
+			}
+			
+			if(gr[x-1][y-1]==0){
+					gr[x-1][y-1]=gr[x][y]+1;
+					q.push(x-1);
+					q.push(y-1);
+			}
+			if(gr[x-1][y]==0){
+					gr[x-1][y]=gr[x][y]+1;
+					q.push(x-1);
+					q.push(y);
+			}
+			if(gr[x-1][y+1]==0){
+					gr[x-1][y+1]=gr[x][y]+1;
+					q.push(x-1);
+					q.push(y+1);
+			}
+			if(gr[x][y-1]==0){
+				gr[x][y-1]=gr[x][y]+1;
+				q.push(x);
+				q.push(y-1);
+			}
+			if(gr[x][y+1]==0){
+				gr[x][y+1]=gr[x][y]+1;
+				q.push(x);
+				q.push(y+1);
+			}
+			if(gr[x+1][y-1]==0){
+				gr[x+1][y-1]=gr[x][y]+1;
+				q.push(x+1);
+				q.push(y-1);
+			}
+			if(gr[x+1][y]==0){
+				gr[x+1][y]=gr[x][y]+1;
+				q.push(x+1);
+				q.push(y);
+			}
+			if(gr[x+1][y+1]==0){
+				gr[x+1][y+1]=gr[x][y]+1;
+				q.push(x+1);
+				q.push(y+1);
+			}
+		} 
+		if(tf==true)printf("Minimal possible length of a trip is %d\n",gr[xe][ye]-1);
+		else printf("King Peter, you can't go now!\n");
+		t--;
+	}
+	return 0;
+}

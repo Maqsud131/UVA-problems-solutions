@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,s,u,v,c,md,mn;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d %d",&n,&s);
+		 vector<int> gr[n+1];
+		 int g[n+1][n+1];
+		 int im[n+1];
+		 int col[n+1];
+		 for(int i=0;i<=n;i++){
+		 	im[i]=0;
+		 	for(int j=0;j<=n;j++)g[i][j]=0;
+		 }
+
+		 for(int i=0;i<s;i++){
+		 	scanf("%d",&u);
+		 	im[u]++;
+		 	while(true){
+		 		scanf("%d",&v);
+		 		if(v==0)break;
+		 		im[v]++;
+		 		if(g[u][v]==0){
+                    //printf("%d\n",v);
+		 			g[u][v]=g[v][u]=1;
+		 			gr[u].push_back(v);
+		 			gr[v].push_back(u);
+		 		}
+		 		u=v;
+		 	}
+            //printf("HGHGSHDGHSFHDGFHSDGFHG\n");
+		 }
+		c=0;
+		md=99999999;
+		for(int i=1;i<=n;i++)if(im[i]>1)c++;
+		for(int i=1;i<=n;i++){
+			if(im[i]>1){ queue<int> q;
+				int avr=0;
+				for(int i=1;i<=n;i++)col[i]=0;
+				q.push(i);
+				col[i]=1;
+				while(!q.empty()){
+					u=q.front();
+					q.pop();
+					for(int j=0;j<gr[u].size();j++){
+						if(col[gr[u][j]]==0){
+							col[gr[u][j]]=col[u]+2;
+							if(im[gr[u][j]]>1)avr=avr+col[gr[u][j]];
+							q.push(gr[u][j]);
+						}
+					}
+				}
+				//printf("%d\n",avr);
+				if(avr<md){
+					md=avr;
+					mn=i;
+				}else if(avr==md && i<mn){mn=i;
+				}
+			}
+		}
+
+		printf("Krochanska is in: %d\n",mn);
+		t--;
+	}
+	return 0;
+}

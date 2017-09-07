@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int t,v;
+    double am,ta,a;
+    scanf("%d",&t);
+    for(int i=1;i<=t;i++){
+        scanf("%lf",&am);
+        a=am;
+        ta=0;
+        if(am>180000){
+            if(am>180000)am=am-180000;
+            if(am>300000){ta=ta+30000;
+                am=am-300000;
+             //   printf("%lf\n",ta);
+            }else if(am>0){ ta=ta+(am*0.10);
+               // printf("%d\n",ta);
+                am=0;
+            }
+            if(am>400000){ta=ta+60000;
+                am=am-400000;
+                //printf("%lf\n",ta);
+            }else if(am>0){ ta=ta+(am*0.15);
+                am=0;
+                //printf("%lf\n",ta);
+            }
+            if(am>300000){ta=ta+60000;
+                am=am-300000;
+                //printf("%lf\n",ta);
+            }else if(am>0){ ta=ta+(am*0.20);
+                am=0;
+               // printf("%lf\n",ta);
+            }
+            if(am>0){ ta=ta+(am*0.25);
+                am=0;
+               // printf("%lf fbbffgb\n",ta);
+            }
+        }
+        v=ta;
+        //printf("%lf\n",ta-v);
+        if(a>180000 && ta<2000)printf("Case %d: 2000\n",i);
+        else if(ta-v>0.000001) printf("Case %d: %d\n",i,v+1);
+        else printf("Case %d: %d\n",i,v);
+    }
+    return 0;
+}

@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t,n,e,u,v,a,b,c;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d %d",&n,&e);
+		vector<int> gr[n];
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			gr[u].push_back(v);
+			gr[v].push_back(u);
+		}
+		
+		int col[n];
+		for(int i=0;i<n;i++)col[i]=0;
+		c=0;
+		bool tr=true;
+		queue<int> q;
+		for(int i=0;i<n;i++){
+			if(col[i]==0){q.push(i);
+				col[i]=1;
+				a=1;
+				b=0;
+				
+				while(!q.empty()){
+					u=q.front();
+					q.pop();
+					for(int j=0;j<gr[u].size();j++){
+						if(col[gr[u][j]]==0){
+							q.push(gr[u][j]);
+							if(col[u]==1){col[gr[u][j]]=2;
+								b++;
+							}else{col[gr[u][j]]=1;
+								a++;
+							}
+						}
+						if(col[gr[u][j]]==col[u]){tr=false;
+							break;
+						}
+					}
+					if(tr==false)break;
+				}
+				if(a<b || b==0)c=c+a;
+				else c=c+b;
+			}
+			if(tr==false)break;
+		}
+		//for(int i=0;i<n;i++)printf("%d\n",col[i]);
+		if(tr==true)printf("%d\n",c);
+		else printf("-1\n");
+		t--;
+	}
+	return 0;
+}

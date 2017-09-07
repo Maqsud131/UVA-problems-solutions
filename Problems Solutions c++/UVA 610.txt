@@ -1,0 +1,83 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> gr[1005];
+int vis[1005];
+int lowtime[1005];
+int arPo[1005];
+int col[1005];
+int pa[1005];
+int coun=0;
+int st=0;
+
+int dfsArP(int u){
+    st++;
+	vis[u]=st;
+	lowtime[u]=st;
+	//printf("u- %d %d\n",u,gr[u].size());
+	for(int i=0;i<gr[u].size();i++){
+
+		int v=gr[u][i];
+		if(vis[v]==0){
+            col[v]=1;
+            pa[v]=u;
+            printf("%d %d\n",u,v);
+			lowtime[u]=min(lowtime[u],dfsArP(v));
+		}else{
+			if(lowtime[u]>lowtime[v] && pa[u]!=v)lowtime[u]=lowtime[v];
+			if(col[v]==1 && pa[u]!=v)printf("%d %d\n",u,v);
+			//if(col[v]==1 && pa[u]!=v)printf("--%d %d\n",lowtime[u],lowtime[v]);
+		}
+	}
+    col[u]=2;
+	if(vis[u]<=lowtime[u]){
+        printf("%d %d\n",u,pa[u]);
+		coun++;
+		arPo[u]=1;
+	}
+	return lowtime[u];
+}
+
+int main() {
+	int n,u,v,e,ca;
+	ca=1;
+	while(true){
+        //printf("sdfsfdsfsdf\n");
+		scanf("%d %d",&n,&e);
+		if(n==0)break;
+        for(int i=1;i<=n;i++){vis[i]=arPo[i]=col[i]=pa[i]=0;
+            gr[i].clear();
+        }
+        //printf("sadfsfsda\n");
+        for(int j=0;j<e;j++){
+            scanf("%d %d",&u,&v);
+            gr[u].push_back(v);
+            gr[v].push_back(u);
+        }
+
+		//printf("asdjfsadf\n");
+        coun=0;
+        printf("%d\n\n",ca);
+        col[1]=1;lowtime[1]=1;
+        vis[1]=1;
+		st=1;
+		for(int i=0;i<gr[1].size();i++){
+			v=gr[1][i];
+			
+			if(vis[v]==0){
+                //printf("sdfsdf\n");
+                printf("%d %d\n",1,v);
+                col[v]=1;
+                pa[v]=1;
+                dfsArP(v);
+                if(i==1)coun++;
+			}
+
+		}
+
+        printf("#\n");
+        ca++;
+	}
+	return 0;
+}

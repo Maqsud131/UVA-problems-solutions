@@ -1,0 +1,51 @@
+ #include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pii;
+ 
+#define ff first
+#define sc second
+#define sz(a) a.size
+#define clr(a) a.clear()
+#define pb(a) push_back(a)
+#define mp(a,b) make_pair(a,b)
+#define all(a) a.begin(), a.end()
+#define init(a,b) memset(a,b,sizeof(a))
+ 
+const int INF = 1<<29;
+const double eps = 1e-8;
+const double PI = 2*acos(0.0);
+
+int main() {
+	int t,n;
+	scanf("%d",&t);
+	while(t>0){
+		scanf("%d",&n);
+		double ar[n];
+		for(int i=0;i<n;i++)scanf("%lf",&ar[i]);
+		sort(ar, ar+n);
+		double a,m,s;
+		bool t1=false;
+		m=0;
+		for(int i=n-1;i>=0;i--){
+			for(int j=i-1;j>=0;j--){
+				for(int k=j-1;k>=0;k--){
+					if(ar[i]>ar[j]+ar[k])break;
+					s=(ar[i]+ar[j]+ar[k])/2.0;
+					a=sqrt(s*(s-ar[i])*(s-ar[j])*(s-ar[k]));
+				//	printf("%lf %lf %lf\n",ar[i],ar[j],ar[k]);
+					if(a>m)m=a;
+					t1=true;
+					break;
+				}
+				if(t1==true)break;
+			}
+			//if(t1==true)break;
+		}
+		printf("%.2lf\n",m);
+		t--;
+	}
+	return 0;
+}

@@ -1,0 +1,120 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+char str1[601];
+char str2[601];
+
+unsigned long long hash1[601];
+unsigned long long hash2[601];
+
+map<string, int> mp;
+
+const int p = 31;
+
+unsigned long long p_pow[601];
+
+
+void calcHash(){
+	for (int i = 0; i <strlen(str1); ++ i){
+    	hash1[i] = (str1[i] - 'a' + 1) * p_pow[i];
+    	if(i)hash1[i] += hash1[i-1];
+	}
+	
+	for (int i = 0; i <strlen(str2); ++ i){
+    	hash2[i] = (str2[i] - 'a' + 1) * p_pow[i];
+    	if(i)hash2[i] += hash2[i-1];
+	}
+}
+
+bool checkHash(int l){
+	unsigned long long s1,s2,s3,s4;
+	for(int i=0;i<=strlen(str1)-l;i++){
+		
+		if(i==0)s1=hash1[i+l-1];
+		else s1=hash1[i+l-1]-hash1[i-1];
+		
+		for(int j=0;j<=strlen(str2)-l;j++){
+			
+			if(j==0)s2=hash2[j+l-1];
+			else s2=hash2[j+l-1]-hash2[j-1];
+			
+			if(j>i){
+				s3=s1*p_pow[j-i];
+				s4=s2;
+			}else{
+				s3=s1;
+				s4=s2*p_pow[i-j];
+			}
+			if(s3==s4)return true;	
+		}
+	}
+	return false;
+}
+
+void getSubStrings(int l){
+	string st1 = string(str1);
+	unsigned long long s1,s2,s3,s4;
+	for(int i=0;i<=strlen(str1)-l;i++){
+		
+		if(i==0)s1=hash1[i+l-1];
+		else s1=hash1[i+l-1]-hash1[i-1];
+		
+		for(int j=0;j<=strlen(str2)-l;j++){
+			
+			if(j==0)s2=hash2[j+l-1];
+			else s2=hash2[j+l-1]-hash2[j-1];
+			
+			if(j>i){
+				s3=s1*p_pow[j-i];
+				s4=s2;
+			}else{
+				s3=s1;
+				s4=s2*p_pow[i-j];
+			}
+			if(s3==s4){
+				string s=st1.substr(i,l);
+				
+				mp.insert(pair<string,int>(s,1));
+			}
+		}
+	}
+}
+
+int binarySearch(){
+	int lo=0;
+	int hi=min(strlen(str1),strlen(str2))+1;
+	
+	while(hi - lo > 1){
+		int mid=(lo+hi)/2;
+		if(checkHash(mid))lo=mid;
+		else hi=mid;
+		
+	}
+	return (hi+lo)/2;
+}
+
+int main() {
+	p_pow[0] = 1;
+	for (size_t i = 1; i <601; ++ i)
+    	p_pow [i] = p_pow [i-1] * p;
+	bool tr=false;
+	while(scanf("%s %s",str1, str2)==2){
+		if(tr)printf("\n");
+		tr=true;
+		calcHash();
+		int l=binarySearch();
+		mp.clear();
+		
+		getSubStrings(l);
+		std::map<string,int>::iterator it=mp.begin();
+		if(l>0){
+			for(it=mp.begin(); it!=mp.end(); ++it)
+    			cout <<it->first<< '\n';
+		}else{
+			printf("No common sequence.\n");
+		}
+		
+	}
+	return 0;
+}

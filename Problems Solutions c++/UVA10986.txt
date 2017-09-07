@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define INF 999999999;
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+
+
+int main() {
+	int ca,n,e,w,s,t,u,v;
+	scanf("%d",&ca);
+	for(int z=1;z<=ca;z++){
+		scanf("%d %d %d %d",&n,&e,&s,&t);
+		vector<int> gr[n];
+		vector<int> we[n];
+		int dt[n];
+		int col[n];
+		int pa[n];
+		for(int i=0;i<e;i++){scanf("%d %d %d",&u,&v,&w);
+			gr[u].push_back(v);
+			gr[v].push_back(u);
+			we[v].push_back(w);
+			we[u].push_back(w);
+		}
+		for(int i=0;i<n;i++)dt[i]=pa[i]=INF;
+		
+		
+		pa[s]=s;
+		dt[s]=0;
+		priority_queue<pair<int,ii>> pq;
+		for(int i=0;i<gr[s].size();i++){
+			pq.push(make_pair(-we[s][i],ii(s,gr[s][i])));
+		}
+		while(!pq.empty()){
+			pair<int,ii> ed=pq.top();
+			pq.pop();
+			v=ed.second.second;
+			u=ed.second.first;
+			//printf("%d %d\n",u,v);
+			if(dt[v]>-ed.first){
+				dt[v]=-ed.first;
+				pa[v]=pa[u];
+				for(int i=0;i<gr[v].size();i++)
+					if(gr[v][i]!=u)pq.push(make_pair(-dt[v]-we[v][i],ii(v,gr[v][i])));
+			}
+			if(v==t)break;
+		}
+		if(pa[t]==s)printf("Case #%d: %d\n",z,dt[t]);
+		else printf("Case #%d: unreachable\n",z);
+		
+	}
+	return 0;
+}

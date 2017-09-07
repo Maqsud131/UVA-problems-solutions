@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	long long n,s,se;
+	while(scanf("%lld",&n)==1){
+		n--;
+		n--;
+		n=n/2;
+			se=12*(n-1)*n/2;
+			s=15+(30*n)+se;
+			printf("%lld\n",s);
+		
+	}
+	return 0;
+}

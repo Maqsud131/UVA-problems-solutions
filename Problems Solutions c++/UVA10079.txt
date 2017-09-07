@@ -1,0 +1,14 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() {
+	long long n,a;
+	while(true){
+		scanf("%lld",&n);
+		if(n<0)break;
+		a=1+ n*(n+1)/2;
+		printf("%lld\n",a);
+	}
+	return 0;
+}

@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+stack<int> st;
+
+void clear( stack<int> &q )
+{
+   stack<int> empty;
+   swap( q, empty );
+}
+
+void dfs1(int u,vector<int> *gr, int *col){
+	col[u]=1;
+	for(int i=0;i<gr[u].size();i++){
+		//printf("%d ",gr[u][i]+1);
+		if(col[gr[u][i]]==0){
+			dfs1(gr[u][i], gr, col);
+		}
+	}
+	//printf("%d\n",u+1);
+	st.push(u);
+}
+
+void dfs2(int u,vector<int> *rgr, int *col,int *indeg,int comp){
+	col[u]=1;
+	indeg[u]=comp;
+	for(int i=0;i<rgr[u].size();i++){
+		if(col[rgr[u][i]]==0){
+			dfs2(rgr[u][i], rgr, col,indeg,comp);
+		}
+	}
+//	printf("%d\n",u+1);
+}
+
+int main() {
+	int n,e,u,v,co,x,y,comp,cost;
+	while(scanf("%d %d",&n,&e)==2){
+		int com[n];
+		int col[n];
+		int indeg[n];
+		vector<int> gr[n];
+		vector<int> rgr[n];
+		memset(col, 0, sizeof(col));
+		int ma[n][n];
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++)ma[i][j]=1;
+		}
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			ma[u-1][v-1]=0;
+			//gr[u-1].push_back(v-1);
+			//rgr[v-1].push_back(u-1);
+		}
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				if(ma[i][j]==1){
+					gr[i].push_back(j);
+			        rgr[j].push_back(i);
+				}
+			}
+		}
+		
+		scanf("%d",&cost);
+		clear(st);
+
+		for(int i=0;i<n;i++){
+			if(col[i]==0)dfs1(i,gr,col);
+		}
+		for(int i=0;i<n;i++)col[i]==0;
+		//stack<int> bu;
+		comp=0;
+		bool tr;
+		memset(col, 0, sizeof(col));
+		while(!st.empty()){
+			u=st.top();
+			//printf("%d\n",u+1);
+			st.pop();
+			if(col[u]==0){
+				tr=false;
+				//printf("dgddr\n");
+				dfs2(u,rgr,col,com,comp++);
+				
+			}
+		}
+		memset(indeg, 0, sizeof(indeg));
+		for(int i=0;i<n;i++){
+			for(int j=0;j<gr[i].size();j++){
+				if(com[i]!=com[gr[i][j]]){indeg[com[gr[i][j]]]++;
+					//printf("%d -> %d\n",i+1,gr[i][j]+1);
+				}
+			}
+		}
+		
+		printf("%d\n",comp*cost);
+	}
+	return 0;
+}

@@ -1,0 +1,28 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+using namespace std;
+
+int main() {
+	int n;
+	double R,r,O,a1,a2,a3,sa,ap,pa,e;
+	double p=2*acos(0.0);
+	while(scanf("%lf %d",&R,&n)==2){
+		if(n!=1){
+		O=2*p/(2*n);
+		r=R*sin(O)/(1+sin(O));
+		a1=p*R*R; 
+		a2=n*p*r*r;
+		sa=a2*(p-2*O)/(2*p);
+		ap=r/tan(O);
+		pa=n*r*ap;
+		a3=pa-sa;
+		e=a1-(a2+a3);
+		printf("%.10lf %.10lf %.10lf\n",r,a3,e);
+		}else{
+			printf("%.10lf 0.0000000000 0.0000000000\n",R);
+		}
+		
+	}
+	return 0;
+}

@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,e,u,v;
+	while(true){
+		scanf("%d %d",&n,&e);
+		if(n==0)break;
+		int col[n+1];
+		int ed[n+1];
+		for(int i=1;i<=n;i++)ed[i]=0;
+		vector<int> gr[n+1];
+		for(int i=0;i<e;i++){
+			scanf("%d %d",&u,&v);
+			ed[u]++;
+			ed[v]++;
+			gr[u].push_back(v);
+			gr[v].push_back(u);
+		}
+		
+		int nul=0;
+		queue<int> oddnodes;
+		for(int i=1;i<=n;i++){
+			if(ed[i]<2) nul++;
+			else if(ed[i]%2!=0)oddnodes.push(i);
+		}
+		
+		int co=0;
+		if(nul>0 || oddnodes.size()==1){
+			printf("Poor Koorosh\n");
+		}else if(oddnodes.size()==0){
+			printf("0\n");
+			}else{
+			for(int i=1;i<=n;i++)col[i]=0;
+			int des=oddnodes.front();
+			oddnodes.pop();
+			while(!oddnodes.empty()){
+				u=oddnodes.front();
+				oddnodes.pop();
+			
+				for(int j=0;j<gr[u].size();j++){
+					v=gr[u][j];
+					if(col[v]==0 && gr[v].size()%2==0 && gr[v].size()>2){
+						col[v]=col[u]+1;
+						oddnodes.push(v);
+					}
+					if(v==des){co=col[u]+1;
+						break;
+					}
+				}
+				if(co>0)break;
+			}
+			
+			if(co==0)printf("Poor Koorosh\n");
+			else printf("%d\n",co);
+		}
+	}
+	
+	return 0;
+}
